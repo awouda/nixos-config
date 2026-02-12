@@ -6,32 +6,32 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       <home-manager/nixos>
       ./hardware-configuration.nix
-      ./sway.nix 
+      ./sway.nix
     ];
 
 
-
-   home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
-      users.alex = import ./home.nix;
-    };
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.alex = import ./home.nix;
+  };
 
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  
-    nixpkgs.config.permittedInsecurePackages = [
-                "broadcom-sta-6.30.223.271-59-6.12.69"
-              ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "broadcom-sta-6.30.223.271-59-6.12.69"
+  ];
 
 
-networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -46,7 +46,7 @@ networking.hostName = "nixos"; # Define your hostname.
   # MacBook Pro 11,1 WiFi Driver
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   boot.initrd.kernelModules = [ "wl" ];
-  
+
   # Block the open-source drivers that conflict with 'wl'
   boot.blacklistedKernelModules = [ "b43" "ssb" "bcma" ];
 
@@ -77,8 +77,8 @@ networking.hostName = "nixos"; # Define your hostname.
 
   # Enable the GNOME Desktop Environment.
 
-services.displayManager.gdm.enable = true;
-services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
 
   # Configure keymap in X11
@@ -115,10 +115,10 @@ services.desktopManager.gnome.enable = true;
     description = "alex";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    alacritty
-    htop
+      alacritty
+      htop
 
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -129,8 +129,8 @@ services.desktopManager.gnome.enable = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

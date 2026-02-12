@@ -4,11 +4,11 @@
 
   programs.sway = {
     enable = true;
-    wrapperFeatures.gtk = true;
+    wrapperFeatures.gtk = true; # otherwise some apps look like from '95
   };
 
 
-  # 3. Fix the Display Manager warnings (New 25.11 Syntax)
+  #  We need those for pam/login
   services.displayManager = {
     sessionPackages = [ pkgs.sway ];
     gdm = {
@@ -18,10 +18,8 @@
   };
 
 
-  # 4. Environment Variables
+  #  Environment Variables
   environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1"; 
-    GDK_SCALE = "2";
-    QT_SCALE_FACTOR = "2";
+    NIXOS_OZONE_WL = "1"; # use Wayland
   };
 }

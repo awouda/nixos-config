@@ -9,18 +9,17 @@
   home.stateVersion = "25.11";
 
 
-programs.google-chrome = {
+  programs.google-chrome = {
     enable = true;
   };
 
 
-
   # This is where your Ghostty, Starship, and Zinit settings go!
   programs.starship.enable = true;
-  
+
   # We can start moving your sway.nix text blocks here next.
 
- # --- Parked: Atuin (Ctrl+R) ---
+  # --- Parked: Atuin (Ctrl+R) ---
   programs.atuin = {
     enable = true;
     enableBashIntegration = true; # Links it to your shell
@@ -28,7 +27,7 @@ programs.google-chrome = {
     flags = [ "--disable-up-arrow" ];
   };
 
- programs.bash = {
+  programs.bash = {
     enable = true;
     # This is the "magic" that fixes the $ATUIN_SESSION error
     initExtra = ''
@@ -44,24 +43,25 @@ programs.google-chrome = {
   };
 
 
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true; # This is the "Ops" way to map 'vi' to 'nvim'
+    vimAlias = true; # Maps 'vim' to 'nvim' as well
+    withNodeJs = true;
+    withPython3 = true;
+    # this is the extra old 'vimrc' config 
+    extraConfig = ''
+      set clipboard+=unnamedplus
+      set number          " Shows the current line number
+      set relativenumber  " Shows relative numbers for all other lines
+ 
+      " Auto-format .nix files on save
+      autocmd BufWritePost *.nix silent! !${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt %
 
-programs.neovim = {
-  enable = true;
-  defaultEditor = true;
-  viAlias = true;  # This is the "Ops" way to map 'vi' to 'nvim'
-  vimAlias = true; # Maps 'vim' to 'nvim' as well
-  withNodeJs = true;
-  withPython3 = true;
-  # this is the extra old 'vimrc' config 
-  extraConfig = ''
-    set clipboard+=unnamedplus
-    set number          " Shows the current line number
-    set relativenumber  " Shows relative numbers for all other lines
-    
-    " (We'll add your custom functions and the shortcut for +y later!)
-  '';
-};
-
+      " (We'll add your custom functions and the shortcut for +y later!)
+    '';
+  };
 
 
   # --- Sway Configuration ---
@@ -93,9 +93,9 @@ programs.neovim = {
         "${modifier}+d" = "exec ${menu}";
         "${modifier}+Shift+q" = "kill";
         "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'";
-        
+
         # Clipboard History
-        "${modifier}+Shift+h" = "exec clipman pick -t rofi";
+        "${modifier}+Control+h" = "exec clipman pick -t rofi";
 
         # Multimedia Keys
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
@@ -109,7 +109,7 @@ programs.neovim = {
       };
 
       # Status Bar
-      bars = [ { command = "waybar"; } ];
+      bars = [{ command = "waybar"; }];
 
       # Autostart
       startup = [
