@@ -125,8 +125,14 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      font.normal.family = "JetBrainsMono Nerd Font Mono";
-      font.size = 12;
+      font =
+        {
+          normal = {
+            family = "JetBrainsMono Nerd Font";
+            style = "Regular";
+          };
+        };
+      font.size = 11;
       selection.save_to_clipboard = true;
       window.opacity = 0.95;
     };
