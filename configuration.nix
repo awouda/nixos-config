@@ -21,6 +21,10 @@
   };
 
 
+  # This enables the docker daemon and the docker-compose CLI plugin
+  virtualisation.docker.enable = true;
+
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -106,6 +110,21 @@
     #media-session.enable = true;
   };
 
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      # Helps with Dell XPS heat/battery [cite: 2026-02-11]
+      CPU_MAX_PERF_ON_AC = 100;
+      CPU_MAX_PERF_ON_BAT = 60;
+    };
+  };
+
+  services.power-profiles-daemon.enable = false;
+
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -113,12 +132,8 @@
   users.users.alex = {
     isNormalUser = true;
     description = "alex";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "video" ];
     packages = with pkgs; [
-      alacritty
-      htop
-
-      #  thunderbird
     ];
   };
 
@@ -129,6 +144,12 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    vim
+    git
+    curl
+    wget
+    pciutils
+    usbutils
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
   ];
