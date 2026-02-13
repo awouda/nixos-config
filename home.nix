@@ -14,15 +14,19 @@
     enable = true;
   };
 
+
+
   programs.starship = {
     enable = true;
     settings = {
-      add_newline = true;
-      format = "$directory$character";
-      right_format = "$time";
+      # Main layout: just call the module names
+      format = "$directory$git_branch$git_status $time $character";
+
       time = {
         disabled = false;
-        style = "bold yellow";
+        style = "yellow";
+        # We put the brackets and the style variable here
+        format = "[$time]($style)";
       };
     };
   };
@@ -117,7 +121,6 @@
 
     '';
   };
-
 
   programs.alacritty = {
     enable = true;
