@@ -29,6 +29,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Enable the proprietary FaceTime HD camera driver
+  hardware.facetimehd.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [
     "broadcom-sta-6.30.223.271-59-6.12.69"

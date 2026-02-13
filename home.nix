@@ -14,7 +14,31 @@
     enable = true;
   };
 
-  programs.starship.enable = true;
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      # This places the prompt elements on the left [cite: 2026-02-09]
+      format = "$directory$git_branch$git_status$character";
+
+      # This forces the time to the far right [cite: 2026-02-09]
+      right_format = "$time";
+
+      time = {
+        disabled = false; # Starship time is disabled by default [cite: 2026-02-09]
+        format = "[$time]($style)";
+        style = "grey";
+        time_format = "%H:%M:%S";
+      };
+
+      # Clean up the directory look
+      directory = {
+        truncation_length = 3;
+        style = "bold blue";
+      };
+    };
+  };
+
 
   # Atuin
   programs.atuin = {
@@ -24,10 +48,9 @@
     flags = [ "--disable-up-arrow" ];
   };
 
-
   programs.git = {
     enable = true;
-    extraConfig = {
+    settings = {
       # This helps with the "pushing new branches" 
       push.autoSetupRemote = true;
       # Standardize on rebase for pulls to keep history clean
@@ -92,21 +115,24 @@
   };
 
 
-  programs.alacritty.settings = {
-    font.normal.family = "JetBrainsMono Nerd Font Mono"; # Match the fc-list Mono variant [cite: 2026-02-12]
-    font.size = 14;
-    selection.save_to_clipboard = true;
-    window.opacity = 0.95;
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      font.normal.family = "JetBrainsMono Nerd Font Mono";
+      font.size = 12;
+      selection.save_to_clipboard = true;
+      window.opacity = 0.95;
+    };
   };
   # Services config
 
   services.swayidle = {
     enable = true;
     timeouts = [
-      { timeout = 300; command = "${pkgs.swaylock}/bin/swaylock -f -c 000000"; } # 5 min lock [cite: 2026-02-12]
+      { timeout = 120; command = "${pkgs.swaylock}/bin/swaylock -f --screenshots --clock --indicator --effect-blur 7x5"; }
       {
-        timeout = 600;
-        command = "${pkgs.sway}/bin/swaymsg 'output * power off'"; # 10 min off [cite: 2026-02-12]
+        timeout = 420;
+        command = "${pkgs.sway}/bin/swaymsg 'output * power off'";
         resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * power on'";
       }
     ];
@@ -147,10 +173,11 @@
         "${modifier}+d" = "exec ${menu}";
         "${modifier}+Shift+q" = "kill";
         "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'";
-
+        "${modifier}+space" = "floating toggle";
         # Clipboard History
         "${modifier}+Control+h" = "exec cliphist list | rofi -dmenu | cliphist decode | wl-copy";
-        # In your wayland.windowManager.sway.config.keybindings
+        # Manual lock with Super+L
+        "${modifier}+Control+l" = "exec ${pkgs.swaylock-effects}/bin/swaylock -f --screenshots --clock --indicator --effect-blur 7x5";
 
         # Multimedia Keys
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
@@ -162,6 +189,12 @@
         # Screenshot (Your custom shortcut)
         "Control+Mod4+s" = "exec grim -g \"$(slurp)\" - | wl-copy";
       };
+      window.commands = [
+        {
+          command = "floating enable, sticky enable, resize set 640 480, move position center";
+          criteria = { app_id = "guvcview"; };
+        }
+      ];
 
       # Status Bar
       bars = [{ command = "waybar"; }];
@@ -173,6 +206,9 @@
         { command = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store"; }
       ];
     };
+    extraConfig = ''
+      exec swaymsg workspace number 1
+    '';
   };
 
   # Add here packages which we want
@@ -208,6 +244,7 @@
     wtype
     cliphist
     guvcview
+    bat
   ];
 }
 
