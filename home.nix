@@ -14,31 +14,28 @@
     enable = true;
   };
 
-
   programs.starship = {
     enable = true;
     settings = {
-      # This places the prompt elements on the left [cite: 2026-02-09]
-      format = "$directory$git_branch$git_status$character";
-
-      # This forces the time to the far right [cite: 2026-02-09]
+      add_newline = true;
+      format = "$directory$character";
       right_format = "$time";
-
       time = {
-        disabled = false; # Starship time is disabled by default [cite: 2026-02-09]
-        format = "[$time]($style)";
-        style = "grey";
-        time_format = "%H:%M:%S";
-      };
-
-      # Clean up the directory look
-      directory = {
-        truncation_length = 3;
-        style = "bold blue";
+        disabled = false;
+        style = "bold yellow";
       };
     };
   };
 
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+  };
 
   # Atuin
   programs.atuin = {
@@ -62,6 +59,8 @@
   programs.bash = {
     enable = true;
     initExtra = ''
+      eval "$(starship init bash)"
+
       gfl() {
             git log --graph --color=always \
                 --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
@@ -72,6 +71,7 @@
                           {}
           FZF-EOF"
           }
+
     '';
     shellAliases = {
       nrs = " sudo nixos-rebuild switch ";
@@ -106,11 +106,15 @@
       nnoremap S "+y
       vnoremap S "+y
 
-      " JSON Formatting shortcut (requires jq) [cite: 2026-02-12]
-      " This pipes the whole file through jq and puts it back
-      command! FormatJSON %!${pkgs.jq}/bin/jq .
-
       autocmd BufWritePost *.nix silent! !${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt %
+      " Set leader to comma
+      let mapleader = ","
+
+      " JSON Formatting Shortcut
+      " Requires 'jq' package in home.packages
+      command! FormatJSON %!${pkgs.jq}/bin/jq .
+      nnoremap <leader>j :FormatJSON<CR>
+
     '';
   };
 
@@ -129,7 +133,10 @@
   services.swayidle = {
     enable = true;
     timeouts = [
-      { timeout = 120; command = "${pkgs.swaylock}/bin/swaylock -f --screenshots --clock --indicator --effect-blur 7x5"; }
+      {
+        timeout = 180;
+        command = "${pkgs.swaylock-effects}/bin/swaylock -f --screenshots --clock --indicator --effect-blur 7x5";
+      }
       {
         timeout = 420;
         command = "${pkgs.sway}/bin/swaymsg 'output * power off'";
@@ -245,6 +252,8 @@
     cliphist
     guvcview
     bat
+    silver-searcher
+    zoxide
   ];
 }
 

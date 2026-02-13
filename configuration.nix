@@ -118,7 +118,6 @@
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      # Helps with Dell XPS heat/battery [cite: 2026-02-11]
       CPU_MAX_PERF_ON_AC = 100;
       CPU_MAX_PERF_ON_BAT = 60;
     };
@@ -130,7 +129,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. 
   users.users.alex = {
     isNormalUser = true;
     description = "alex";
