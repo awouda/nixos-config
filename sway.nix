@@ -1,12 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true; # otherwise some apps look like from '95
   };
-
 
   #  We need those for pam/login
   services.displayManager = {
@@ -16,7 +14,6 @@
       wayland = true;
     };
   };
-
 
   #  Environment Variables
   environment.sessionVariables = {

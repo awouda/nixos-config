@@ -13,29 +13,37 @@
       ./sway.nix
     ];
 
-
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     users.alex = import ./home.nix;
   };
 
-
   # This enables the docker daemon and the docker-compose CLI plugin
   virtualisation.docker.enable = true;
-
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Enable the proprietary FaceTime HD camera driver
+  # -- section Apple MacbookPro 2014 11,1 specific config --
+
+  # Enable the proprietary FaceTime HD camera driver on MacbookPro 11,1 (2014 model)
   hardware.facetimehd.enable = true;
 
+  # Enable the propietary Wifi driver on MacbookPro 11,1 (2014 model)
   nixpkgs.config.permittedInsecurePackages = [
     "broadcom-sta-6.30.223.271-59-6.12.69"
   ];
 
+  # MacBook Pro 11,1 WiFi Driver
+  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  boot.initrd.kernelModules = [ "wl" ];
+
+  # Block the open-source drivers that conflict with 'wl'
+  boot.blacklistedKernelModules = [ "b43" "ssb" "bcma" ];
+
+  # -- end Macbook section --
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -46,19 +54,11 @@
 
   # Enable networking
 
-  # Allow unfree for the Broadcom driver
+  # Allow unfree (for Broadcom a.o.)
   nixpkgs.config.allowUnfree = true;
-
-  # MacBook Pro 11,1 WiFi Driver
-  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
-  boot.initrd.kernelModules = [ "wl" ];
-
-  # Block the open-source drivers that conflict with 'wl'
-  boot.blacklistedKernelModules = [ "b43" "ssb" "bcma" ];
 
   # Networking
   networking.networkmanager.enable = true;
-
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -78,16 +78,16 @@
     LC_TIME = "nl_NL.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # Disable the X11 windowing system if not needed
+  services.xserver.enable = false;
 
-  # Enable the GNOME Desktop Environment.
-
+  # Keep GDM as the login manager (it handles Wayland great)
   services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
 
+  # Remove GNOME to save space/resources
+  services.desktopManager.gnome.enable = false;
 
-  # Configure keymap in X11
+  # Keep this! Sway uses these settings for your keyboard
   services.xserver.xkb = {
     layout = "us";
     variant = "";
@@ -125,7 +125,6 @@
 
   services.power-profiles-daemon.enable = false;
 
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -141,6 +140,15 @@
   # Install firefox.
   programs.firefox.enable = true;
 
+  # Nix Store Management
+  nix = {
+    settings.auto-optimise-store = true; # Deduplicates files on every build
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -181,5 +189,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-
 }
