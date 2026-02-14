@@ -1,6 +1,13 @@
 { pkgs, lib, ... }:
 
 {
+
+  imports =
+    [
+      ./neovim.nix
+    ];
+
+
   home.username = "alex";
   home.homeDirectory = "/home/alex";
   home.stateVersion = "25.11";
@@ -8,14 +15,36 @@
   # fonts configuration
   fonts.fontconfig.enable = true;
 
-  # program specific configuration
+  # Set the GTK theme and font
+  gtk = {
+    enable = true;
+    font = {
+      name = "JetBrains Mono"; # Or "Inter", "Ubuntu"
+      size = 11;
+    };
+    theme = {
+      name = "Adwaita-dark"; # Matches your dark terminal vibe
+      package = pkgs.gnome-themes-extra;
+    };
+  };
 
+  home.file.".local/share/applications/google-chrome.desktop".text = ''
+    [Desktop Entry]
+    Version=1.0
+    Name=Google Chrome (Scaled)
+    Exec=google-chrome-stable --high-dpi-support=1 --force-device-scale-factor=0.8 %U
+    Terminal=false
+    Icon=google-chrome
+    Type=Application
+    Categories=Network;WebBrowser;
+    MimeType=text/html;text/xml;application/xhtml+xml;application/xml;
+  '';
+
+
+  # program specific configuration
   programs.google-chrome = {
     enable = true;
   };
-
-
-
   programs.starship = {
     enable = true;
     settings = {
@@ -89,38 +118,11 @@
       gcam = " git commit -am ";
       ggpush = " git push origin HEAD ";
       ggpull = " git pull origin HEAD ";
+      chrome = "google-chrome-stable --high-dpi-support=1 --force-device-scale-factor=0.8";
+      google-chrome-stable = "google-chrome-stable --high-dpi-support=1 --force-device-scale-factor=0.8";
     };
   };
 
-
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    withNodeJs = true;
-    withPython3 = true;
-    # this is the extra old 'vimrc' config 
-    extraConfig = ''
-      set clipboard+=unnamedplus
-      set number
-      set relativenumber
-
-      " Remap S to yank to system clipboard [cite: 2026-02-12]
-      nnoremap S "+y
-      vnoremap S "+y
-
-      autocmd BufWritePost *.nix silent! !${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt %
-      " Set leader to comma
-      let mapleader = ","
-
-      " JSON Formatting Shortcut
-      " Requires 'jq' package in home.packages
-      command! FormatJSON %!${pkgs.jq}/bin/jq .
-      nnoremap <leader>j :FormatJSON<CR>
-
-    '';
-  };
 
   programs.alacritty = {
     enable = true;
