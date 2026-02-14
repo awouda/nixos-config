@@ -6,43 +6,54 @@
 
     # This section handles the look (CSS)
     style = ''
-      * {
-          font-family: "JetBrainsMono Nerd Font";
-          font-size: 13px;
-          border: none;
-          border-radius: 0;
-      }
+        * {
+            font-family: "JetBrainsMono Nerd Font";
+            font-size: 13px;
+            border: none;
+            border-radius: 0;
+        }
 
-      window#waybar {
-          background-color: rgba(26, 26, 26, 0.9);
-          border-bottom: 2px solid #333333;
-          color: #ffffff;
-      }
 
-      #workspaces button {
-          padding: 0 5px;
-          background-color: transparent;
-          color: #888888;
-      }
 
-      #workspaces button.focused {
-          color: #00ff00; /* Minimalist green accent */
-          border-bottom: 2px solid #00ff00;
-      }
 
-      #battery, #clock, #cpu, #memory, #network, #pulseaudio, #tray {
-          padding: 0 10px;
-          background: transparent;
-          color: #ffffff;
-      }
+        window#waybar {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-bottom: 2px solid #333333;
+            color: #ffffff;
+        }
 
-      #battery.charging {
-          color: #00ff00;
-      }
+        #workspaces button {
+            padding: 0 5px;
+            background-color: transparent;
+            color: #888888;
+        }
 
-      #battery.warning:not(.charging) {
-          color: #ffaa00;
-      }
+        #workspaces button.focused {
+            color: #00ff00; /* Minimalist green accent */
+            border-bottom: 2px solid #00ff00;
+        }
+
+
+       #window {
+      padding: 0 30px; /* Adds space around the window title */
+      color: #bbbbbb;
+      font-weight: bold;
+       }
+
+
+        #battery, #clock, #cpu, #memory, #network, #pulseaudio, #tray {
+            padding: 0 10px;
+            background: transparent;
+            color: #ffffff;
+        }
+
+        #battery.charging {
+            color: #00ff00;
+        }
+
+        #battery.warning:not(.charging) {
+            color: #ffaa00;
+        }
     '';
 
     # This section handles the logic and modules
@@ -51,8 +62,8 @@
       position = "top";
       height = 30;
 
+      modules-center = [ "sway/window" "clock" ];
       modules-left = [ "sway/workspaces" "sway/mode" ];
-      modules-center = [ "clock" ];
       modules-right = [ "cpu" "memory" "pulseaudio" "network" "battery" "tray" ];
 
       "sway/workspaces" = {

@@ -38,15 +38,33 @@
 
       window = {
         titlebar = false;
-        border = 2;
+        border = 1;
       };
       floating = {
         titlebar = false;
       };
       gaps = {
-        inner = 10;
-        outer = 5;
+        inner = 8;
+        outer = 10;
         smartGaps = true;
+      };
+
+
+      colors = {
+        focused = {
+          border = "#bbbbbb"; # Slightly softer white/gray
+          background = "#282828";
+          text = "#ffffff";
+          indicator = "#444444";
+          childBorder = "#bbbbbb";
+        };
+        focusedInactive = {
+          border = "#333333";
+          background = "#282828";
+          text = "#888888";
+          indicator = "#282828";
+          childBorder = "#333333";
+        };
       };
 
       # Output (Display Scaling & Position)
