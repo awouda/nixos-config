@@ -156,7 +156,7 @@
   # Java. Current main version 21
   programs.java = {
     enable = true;
-    package = pkgs.jdk21;
+    package = pkgs.temurin-bin-21;
   };
 
   # Add here packages which we want

@@ -36,6 +36,19 @@
       terminal = "alacritty";
       menu = "rofi -show drun -show-icons";
 
+      window = {
+        titlebar = false;
+        border = 2;
+      };
+      floating = {
+        titlebar = false;
+      };
+      gaps = {
+        inner = 10;
+        outer = 5;
+        smartGaps = true;
+      };
+
       # Output (Display Scaling & Position)
       output = {
         "eDP-1" = {
