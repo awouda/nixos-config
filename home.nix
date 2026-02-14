@@ -93,19 +93,32 @@
   programs.bash = {
     enable = true;
     initExtra = ''
-      eval "$(starship init bash)"
+        eval "$(starship init bash)"
 
-      gfl() {
-            git log --graph --color=always \
-                --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-            fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-                --bind "ctrl-m:execute:
-                          (grep -o '[a-f0-9]\{7\}' | head -1 |
-                          xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                          {}
-          FZF-EOF"
-          }
+        gfl() {
+              git log --graph --color=always \
+                  --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+              fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+                  --bind "ctrl-m:execute:
+                            (grep -o '[a-f0-9]\{7\}' | head -1 |
+                            xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                            {}
+            FZF-EOF"
+            }
 
+        if [ -d /etc/nixos/.git ]; then
+           CHANGES=$(git -C /etc/nixos status --porcelain)
+            if [ -n "$CHANGES" ]; then
+            echo -e "\e[33m󱈚 Ops Alert: Uncommitted changes in /etc/nixos\e[0m"
+           fi
+        fi
+
+       # Java Check
+       if ! grep -q "programs.java" /etc/nixos/*.nix; then
+          if command -v java >/dev/null; then
+              echo -e "\e[31m󰓅 Warning: Java is installed but not declared in Nix config!\e[0m"
+          fi
+      fi
     '';
     shellAliases = {
       nrs = " sudo nixos-rebuild switch ";
@@ -124,7 +137,6 @@
     };
   };
 
-
   programs.alacritty = {
     enable = true;
     settings = {
@@ -139,6 +151,12 @@
       selection.save_to_clipboard = true;
       window.opacity = 0.95;
     };
+  };
+
+  # Java. Current main version 21
+  programs.java = {
+    enable = true;
+    package = pkgs.jdk21;
   };
 
   # Add here packages which we want
@@ -177,7 +195,6 @@
     bat
     silver-searcher
     zoxide
-    swaylock-effects
   ];
 }
 

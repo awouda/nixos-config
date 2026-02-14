@@ -70,6 +70,8 @@
 
         # Screenshot (Your custom shortcut)
         "Control+Mod4+s" = "exec grim -g \"$(slurp)\" - | wl-copy";
+
+
       };
       window.commands = [
         {
