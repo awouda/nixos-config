@@ -6,6 +6,7 @@
     [
       ./neovim.nix
       ./sway-home.nix
+      ./sway-bar.nix
     ];
 
   home.username = "alex";
