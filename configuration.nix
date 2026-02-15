@@ -83,6 +83,13 @@
     LC_TIME = "nl_NL.UTF-8";
   };
 
+
+  # additional configs for speeding up gtk apps 
+  services.dbus.enable = true;
+  services.gvfs.enable = true; # Mount, trash, and remote fs support
+  services.tumbler.enable = true; # Thumbnail support for Thunar
+  services.gnome.gnome-keyring.enable = true; # Stops apps from hanging on "Secret" lookups
+
   # Disable the X11 windowing system if not needed
   services.xserver.enable = false;
 

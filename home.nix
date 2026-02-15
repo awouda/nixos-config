@@ -35,6 +35,7 @@
     };
   };
 
+
   # for speed up GTK apps
   xdg.portal = {
     enable = true;
@@ -67,6 +68,60 @@
       };
     };
   };
+
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi;
+
+    theme =
+      let
+        inherit (config.lib.formats.rasi) mkLiteral;
+      in
+      {
+        "*" = {
+          bg = mkLiteral "#1a1a1a";
+          fg = mkLiteral "#e0e0e0";
+          accent = mkLiteral "#00ff00"; # Your green accent
+          bg-selected = mkLiteral "#333333";
+        };
+
+        "window" = {
+          width = mkLiteral "35%";
+          border = mkLiteral "2px";
+          border-color = mkLiteral "#333333";
+          border-radius = mkLiteral "12px";
+          background-color = mkLiteral "@bg";
+          padding = mkLiteral "20px";
+        };
+
+        "listview" = {
+          lines = 8;
+          columns = 1;
+        };
+
+        "element" = {
+          padding = mkLiteral "8px";
+          border-radius = mkLiteral "8px";
+        };
+
+        "element selected" = {
+          background-color = mkLiteral "@bg-selected";
+          text-color = mkLiteral "@accent"; # Selected text turns green
+        };
+
+        # This is the secret sauce to make the text visible
+        "element-text" = {
+          background-color = mkLiteral "inherit";
+          text-color = mkLiteral "inherit";
+        };
+
+        "element-icon" = {
+          size = mkLiteral "24px";
+          background-color = mkLiteral "inherit";
+        };
+      };
+  };
+
 
   programs.zoxide = {
     enable = true;
