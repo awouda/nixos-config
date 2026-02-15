@@ -87,6 +87,8 @@
   };
 
 
+  services.flatpak.enable = true;
+
   # additional configs for speeding up gtk apps 
   services.dbus.enable = true;
   services.gvfs.enable = true; # Mount, trash, and remote fs support
