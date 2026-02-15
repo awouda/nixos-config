@@ -15,8 +15,8 @@
     };
   };
 
-  #  Environment Variables
   environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1"; # use Wayland
+    NIXOS_OZONE_WL = "1";
   };
+
 }

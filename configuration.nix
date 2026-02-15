@@ -81,12 +81,6 @@
   # Disable the X11 windowing system if not needed
   services.xserver.enable = false;
 
-  # Keep GDM as the login manager (it handles Wayland great)
-  services.displayManager.gdm.enable = true;
-
-  # Remove GNOME to save space/resources
-  services.desktopManager.gnome.enable = false;
-
   # Keep this! Sway uses these settings for your keyboard
   services.xserver.xkb = {
     layout = "us";
@@ -159,8 +153,16 @@
     wget
     pciutils
     usbutils
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
+
+    jetbrains.idea-ultimate
+    spotify
+    teams-for-linux
+    slack
+
+    # The File Manager
+    xfce.thunar
+    xfce.thunar-volman
+    gvfs # Required for icons/trash in Thunar
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

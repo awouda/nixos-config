@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 {
 
@@ -120,6 +120,12 @@
               echo -e "\e[31m󰓅 Warning: Java is installed but not declared in Nix config!\e[0m"
           fi
       fi
+
+      if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      fi
+
+
     '';
     shellAliases = {
       nrs = " sudo nixos-rebuild switch ";
@@ -159,6 +165,8 @@
     enable = true;
     package = pkgs.temurin-bin-21;
   };
+
+
 
   # Add here packages which we want
   home.packages = with pkgs; [
