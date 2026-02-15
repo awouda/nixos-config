@@ -48,6 +48,9 @@
   # Block the open-source drivers that conflict with 'wl'
   boot.blacklistedKernelModules = [ "b43" "ssb" "bcma" ];
 
+  # toggle Fn key
+  boot.kernelParams = [ "hid_apple.fnmode=2" ];
+
   # -- end Macbook section --
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -131,6 +134,7 @@
 
   services.power-profiles-daemon.enable = false;
 
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -166,7 +170,7 @@
     pciutils
     usbutils
 
-    jetbrains.idea-ultimate
+    jetbrains.idea
     spotify
     teams-for-linux
     slack

@@ -7,6 +7,7 @@
       ./neovim.nix
       ./sway-home.nix
       ./sway-bar.nix
+      ./rofi.nix
     ];
 
   home.username = "alex";
@@ -27,7 +28,7 @@
     enable = true;
     font = {
       name = "JetBrainsMono Nerd Font"; # 
-      size = 11;
+      size = 10;
     };
     theme = {
       name = "Adwaita-dark"; # 
@@ -68,60 +69,6 @@
       };
     };
   };
-
-  programs.rofi = {
-    enable = true;
-    package = pkgs.rofi;
-
-    theme =
-      let
-        inherit (config.lib.formats.rasi) mkLiteral;
-      in
-      {
-        "*" = {
-          bg = mkLiteral "#1a1a1a";
-          fg = mkLiteral "#e0e0e0";
-          accent = mkLiteral "#00ff00"; # Your green accent
-          bg-selected = mkLiteral "#333333";
-        };
-
-        "window" = {
-          width = mkLiteral "35%";
-          border = mkLiteral "2px";
-          border-color = mkLiteral "#333333";
-          border-radius = mkLiteral "12px";
-          background-color = mkLiteral "@bg";
-          padding = mkLiteral "20px";
-        };
-
-        "listview" = {
-          lines = 8;
-          columns = 1;
-        };
-
-        "element" = {
-          padding = mkLiteral "8px";
-          border-radius = mkLiteral "8px";
-        };
-
-        "element selected" = {
-          background-color = mkLiteral "@bg-selected";
-          text-color = mkLiteral "@accent"; # Selected text turns green
-        };
-
-        # This is the secret sauce to make the text visible
-        "element-text" = {
-          background-color = mkLiteral "inherit";
-          text-color = mkLiteral "inherit";
-        };
-
-        "element-icon" = {
-          size = mkLiteral "24px";
-          background-color = mkLiteral "inherit";
-        };
-      };
-  };
-
 
   programs.zoxide = {
     enable = true;
@@ -202,7 +149,9 @@
       ggpush = " git push origin HEAD ";
       ggpull = " git pull origin HEAD ";
       chrome = "google-chrome-stable --high-dpi-support=1 --force-device-scale-factor=0.8";
+      open = "xdg-open";
       google-chrome-stable = "google-chrome-stable --high-dpi-support=1 --force-device-scale-factor=0.8";
+      cat = "bat -p ";
     };
   };
 
@@ -228,6 +177,23 @@
     package = pkgs.temurin-bin-21;
   };
 
+
+  # Zathura Configuration
+  programs.zathura = {
+    enable = true;
+    options = {
+      selection-clipboard = "clipboard";
+      recolor = true; # Dark mode
+      recolor-keephue = true;
+
+      # Monochrome colors to match your rice
+      recolor-lightcolor = "#1a1a1a";
+      recolor-darkcolor = "#e0e0e0";
+
+      # Try setting this to true if the jumps are weird
+      page-store-threshold = 0;
+    };
+  };
 
 
   # Add here packages which we want
@@ -266,6 +232,18 @@
     bat
     silver-searcher
     zoxide
+    # --- Video, Image & PDF ---
+    mpv
+    imv
+    zathura
+    # --- Productivity & Notes ---
+    libreoffice-fresh
+    awscli2
+    # --- Appearance (The Rice) ---
+    papirus-icon-theme
+    gnome-themes-extra
+    # WhatsApp
+    zapzap
   ];
 }
 
