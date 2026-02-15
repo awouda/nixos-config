@@ -123,6 +123,10 @@
     };
     extraConfig = ''
       exec swaymsg workspace number 1
+
+      # Essential for making GTK apps snappy and functional on Wayland
+      exec dbus-update-activation-environment --all
+      exec systemctl --user import-environment PATH JAVA_HOME
     '';
   };
 }

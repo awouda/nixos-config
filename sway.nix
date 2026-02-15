@@ -6,15 +6,6 @@
     wrapperFeatures.gtk = true; # otherwise some apps look like from '95
   };
 
-  #  We need those for pam/login
-  services.displayManager = {
-    sessionPackages = [ pkgs.sway ];
-    gdm = {
-      enable = true;
-      wayland = true;
-    };
-  };
-
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };

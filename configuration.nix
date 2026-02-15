@@ -26,6 +26,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # -- section for Dell XPS
+  # uncomment for XPS
+  #hardware.enableAllFirmware = true;
+  # -- end section Dell XPS
+
   # -- section Apple MacbookPro 2014 11,1 specific config --
 
   # Enable the proprietary FaceTime HD camera driver on MacbookPro 11,1 (2014 model)

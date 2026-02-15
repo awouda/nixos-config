@@ -35,6 +35,13 @@
     };
   };
 
+  # for speed up GTK apps
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+    config.common.default = "*";
+  };
+
   # program specific configuration
   programs.chromium = {
     enable = true;
