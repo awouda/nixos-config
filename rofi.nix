@@ -62,19 +62,20 @@
           vertical-align = mkLiteral "0.5";
         };
 
-        # The selection bar: Pure White background, Black text
         "element selected" = {
-          background-color = mkLiteral "#ffffff";
+          background-color = mkLiteral "#ffffff"; # The white bar
         };
 
+        # This is the critical part to force the text to black
         "element selected element-text" = {
-          text-color = mkLiteral "#000000"; # Flip to black when selected
+          text-color = mkLiteral "#000000"; # Black text
+          background-color = mkLiteral "transparent";
         };
 
-        "element-icon" = {
-          size = mkLiteral "24px";
-          padding = mkLiteral "0 10px 0 0";
+        "element selected element-icon" = {
+          background-color = mkLiteral "transparent";
         };
+
       };
   };
 }
