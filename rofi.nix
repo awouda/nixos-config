@@ -11,7 +11,6 @@
       {
         "*" = {
           background-color = mkLiteral "transparent";
-          # This is a global reset to prevent "Ghost White" backgrounds
         };
 
         "window" = {
@@ -51,25 +50,28 @@
           spacing = mkLiteral "5px";
         };
 
+
+
         "element" = {
           padding = mkLiteral "8px";
           border-radius = mkLiteral "8px";
-          background-color = mkLiteral "transparent";
+          text-color = mkLiteral "#ffffff";
         };
 
         "element-text" = {
-          text-color = mkLiteral "#ffffff"; # Force white text
+          text-color = mkLiteral "inherit";
+          background-color = mkLiteral "transparent";
           vertical-align = mkLiteral "0.5";
         };
 
         "element selected" = {
-          background-color = mkLiteral "#ffffff"; # The white bar
+          background-color = mkLiteral "#ffffff"; # White bar
+          text-color = mkLiteral "#000000";
         };
 
-        # This is the critical part to force the text to black
+
         "element selected element-text" = {
-          text-color = mkLiteral "#000000"; # Black text
-          background-color = mkLiteral "transparent";
+          text-color = mkLiteral "#000000";
         };
 
         "element selected element-icon" = {
