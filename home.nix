@@ -1,5 +1,33 @@
 { pkgs, lib, config, ... }:
 
+let
+  myScript = name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name}.sh);
+
+  git-fuzzy-pkg = pkgs.stdenv.mkDerivation {
+    pname = "git-fuzzy";
+    version = "94994df";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "bigH";
+      repo = "git-fuzzy";
+      rev = "94994df792eb16638aea9a9726eac321bb6da2ca";
+      sha256 = "sha256-T2jbMMNckTLN7ejH+Fl2T4wAALGExiE3+DohZjxa1y4="; # Use a fake hash first if this fails, Nix will tell you the right one
+    };
+
+
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+
+    installPhase = ''
+      mkdir -p $out/bin $out/share/git-fuzzy
+      cp -r * $out/share/git-fuzzy/
+      
+      # We wrap the binary so it always has access to bc, git, and fzf
+      makeWrapper $out/share/git-fuzzy/bin/git-fuzzy $out/bin/git-fuzzy \
+        --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.bc pkgs.git pkgs.fzf pkgs.coreutils ]}
+    '';
+  };
+
+in
 {
 
   imports =
@@ -107,16 +135,11 @@
     enable = true;
     initExtra = ''
         eval "$(starship init bash)"
-
-        gfl() {
-              git log --graph --color=always \
-                  --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-              fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-                  --bind "ctrl-m:execute:
-                            (grep -o '[a-f0-9]\{7\}' | head -1 |
-                            xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                            {}
-            FZF-EOF"
+    
+        # Cat and copy to Wayland clipboard
+            ccat() {
+              cat "$@" | wl-copy
+              echo "Copied to clipboard!"
             }
 
         if [ -d /etc/nixos/.git ]; then
@@ -147,7 +170,6 @@
       hconf = " vi /etc/nixos/home.nix ";
       gco = " git checkout ";
       gcb = " git checkout -b ";
-      gfs = " git status -sb ";
       gcam = " git commit -am ";
       ggpush = " git push origin HEAD ";
       ggpull = " git pull origin HEAD ";
@@ -155,6 +177,8 @@
       open = "xdg-open";
       google-chrome-stable = "google-chrome-stable --high-dpi-support=1 --force-device-scale-factor=0.8";
       cat = "bat -p ";
+      gfs = "git fuzzy status";
+      gfl = "fshow";
     };
   };
 
@@ -199,8 +223,10 @@
   };
 
 
-  # Add here packages which we want
+
   home.packages = with pkgs; [
+    (myScript "fshow")
+
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only # Good to have for extra icons 
     alacritty
@@ -247,6 +273,7 @@
     gnome-themes-extra
     # WhatsApp
     zapzap
+    git-fuzzy-pkg
   ];
 }
 
