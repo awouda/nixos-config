@@ -38,7 +38,7 @@
 
   # Enable the propietary Wifi driver on MacbookPro 11,1 (2014 model)
   nixpkgs.config.permittedInsecurePackages = [
-    "broadcom-sta-6.30.223.271-59-6.12.69"
+    "broadcom-sta-6.30.223.271-59-6.12.70"
   ];
 
   # MacBook Pro 11,1 WiFi Driver
