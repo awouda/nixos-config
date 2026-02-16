@@ -7,7 +7,7 @@ in
   imports =
     [
       ./modules/core/shell.nix
-      ./neovim.nix
+      ./modules/desktop/default.nix
       ./sway-home.nix
       ./sway-bar.nix
       ./rofi.nix
@@ -42,39 +42,11 @@ in
     };
   };
 
-
   # for speed up GTK apps
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
     config.common.default = "*";
-  };
-
-  # program specific configuration
-  programs.chromium = {
-    enable = true;
-    package = pkgs.google-chrome.override {
-      commandLineArgs = [
-        "--ozone-platform-hint=auto"
-        "--force-device-scale-factor=0.8" # Since you like the 2x scale
-      ];
-    };
-  };
-
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      font =
-        {
-          normal = {
-            family = "JetBrainsMono Nerd Font";
-            style = "Regular";
-          };
-        };
-      font.size = 11;
-      selection.save_to_clipboard = true;
-      window.opacity = 0.95;
-    };
   };
 
   # Java. Current main version 21
@@ -83,42 +55,12 @@ in
     package = pkgs.temurin-bin-21;
   };
 
-
-  # Zathura Configuration
-  programs.zathura = {
-    enable = true;
-    options = {
-      selection-clipboard = "clipboard";
-      recolor = true; # Dark mode
-      recolor-keephue = true;
-
-      # Monochrome colors to match your rice
-      recolor-lightcolor = "#1a1a1a";
-      recolor-darkcolor = "#e0e0e0";
-
-      # Try setting this to true if the jumps are weird
-      page-store-threshold = 0;
-    };
-  };
-
-
-
+  # ONLY CLI, DevOps Tools, and Fonts remain here!
   home.packages = with pkgs; [
     (myScript "fshow")
-
     nerd-fonts.jetbrains-mono
-    nerd-fonts.symbols-only # Good to have for extra icons 
-    alacritty
-    rofi
-    waybar
-    pamixer
-    brightnessctl
-    grim
-    slurp
-    wl-clipboard
-    clipman
-    networkmanagerapplet
-    wl-clipboard
+    nerd-fonts.symbols-only
+    # --- DevOps & CLI ---
     git
     htop
     btop
@@ -134,24 +76,10 @@ in
     kubectl
     kubectx
     kubelogin
-    wtype
-    cliphist
-    guvcview
     bat
     silver-searcher
     zoxide
-    # --- Video, Image & PDF ---
-    mpv
-    imv
-    zathura
-    # --- Productivity & Notes ---
-    libreoffice-fresh
     awscli2
-    # --- Appearance (The Rice) ---
-    papirus-icon-theme
-    gnome-themes-extra
-    # WhatsApp
-    zapzap
   ];
 }
 
