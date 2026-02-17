@@ -1,20 +1,16 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
   imports =
     [
-      # Include the results of the hardware scan.
       <home-manager/nixos>
+      ./hardware-configuration.nix # must be the one for your hardware
+      ./modules/desktop/sway-system.nix
       # ---- THE HARDWARE TOGGLE ----
       ./hosts/macbook/default.nix
       # ./hosts/xps/default.nix
       # ./hosts/generic/default.nix
-      ./hardware-configuration.nix
-      ./sway.nix
+      # ---- END HARDWARE TOGGLE ----
     ];
 
   home-manager = {
@@ -30,20 +26,17 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-
+  # Enable networking
   networking.hostName = "nixos"; # Define your hostname.
+  # Networking: gives us nmcli and nm-applet
+  networking.networkmanager.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable networking
-
   # Allow unfree (for Broadcom a.o.)
   nixpkgs.config.allowUnfree = true;
-
-  # Networking: gives us nmcli and nm-applet
-  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -62,7 +55,6 @@
     LC_TELEPHONE = "nl_NL.UTF-8";
     LC_TIME = "nl_NL.UTF-8";
   };
-
 
   services.flatpak.enable = true;
 
@@ -100,6 +92,7 @@
     #media-session.enable = true;
   };
 
+  # powermanagement
   services.tlp = {
     enable = true;
     settings = {
@@ -112,10 +105,6 @@
   };
 
   services.power-profiles-daemon.enable = false;
-
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. 
   users.users.alex = {

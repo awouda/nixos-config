@@ -13,9 +13,6 @@
             border-radius: 0;
         }
 
-
-
-
         window#waybar {
             background-color: rgba(26, 26, 26, 0.9);
             border-bottom: 2px solid #333333;
@@ -33,13 +30,11 @@
             border-bottom: 2px solid #00ff00;
         }
 
-
        #window {
       padding: 0 30px; /* Adds space around the window title */
       color: #bbbbbb;
       font-weight: bold;
        }
-
 
         #battery, #clock, #cpu, #memory, #network, #pulseaudio, #tray {
             padding: 0 10px;

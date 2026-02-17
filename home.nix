@@ -1,15 +1,17 @@
 { pkgs, lib, config, ... }:
 
 let
-  myScript = name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name}.sh);
+  myScript = name: pkgs.writeShellScriptBin name (builtins.readFile ./modules/core/scripts/${name}.sh);
 in
 {
   imports =
     [
       ./modules/core/shell.nix
       ./modules/desktop/default.nix
-      ./sway-home.nix
-      ./sway-bar.nix
+
+      # ---- THEME TOGGLE ----
+      ./modules/rices/monochrome/sway.nix
+      ./modules/rices/monochrome/waybar.nix
     ];
 
   home.username = "alex";
