@@ -10,7 +10,6 @@ in
       ./modules/desktop/default.nix
       ./sway-home.nix
       ./sway-bar.nix
-      ./rofi.nix
     ];
 
   home.username = "alex";

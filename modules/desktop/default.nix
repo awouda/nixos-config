@@ -1,6 +1,11 @@
 { pkgs, config, ... }:
 
+
 {
+  imports = [
+    ./rofi.nix
+  ];
+
   programs.chromium = {
     enable = true;
     package = pkgs.google-chrome.override {
