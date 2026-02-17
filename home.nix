@@ -60,6 +60,7 @@ in
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
     # --- DevOps & CLI ---
+    tree
     git
     htop
     btop

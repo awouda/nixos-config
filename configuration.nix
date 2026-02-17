@@ -9,6 +9,9 @@
     [
       # Include the results of the hardware scan.
       <home-manager/nixos>
+      # ---- THE HARDWARE TOGGLE ----
+      ./hosts/macbook/default.nix
+      # ./hosts/xps/default.nix
       ./hardware-configuration.nix
       ./sway.nix
     ];
@@ -26,32 +29,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # -- section for Dell XPS
-  # uncomment for XPS
-  #hardware.enableAllFirmware = true;
-  # -- end section Dell XPS
-
-  # -- section Apple MacbookPro 2014 11,1 specific config --
-
-  # Enable the proprietary FaceTime HD camera driver on MacbookPro 11,1 (2014 model)
-  hardware.facetimehd.enable = true;
-
-  # Enable the propietary Wifi driver on MacbookPro 11,1 (2014 model)
-  nixpkgs.config.permittedInsecurePackages = [
-    "broadcom-sta-6.30.223.271-59-6.12.70"
-  ];
-
-  # MacBook Pro 11,1 WiFi Driver
-  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
-  boot.initrd.kernelModules = [ "wl" ];
-
-  # Block the open-source drivers that conflict with 'wl'
-  boot.blacklistedKernelModules = [ "b43" "ssb" "bcma" ];
-
-  # toggle Fn key
-  boot.kernelParams = [ "hid_apple.fnmode=2" ];
-
-  # -- end Macbook section --
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
