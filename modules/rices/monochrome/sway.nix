@@ -87,7 +87,7 @@
 
       # Keybindings (Merging your custom keys with defaults)
       keybindings = lib.mkOptionDefault {
-        "${modifier}+Return" = "exec ${terminal}";
+        "${modifier}+Return" = "exec ${terminal} --working-directory ~ ";
         "${modifier}+d" = "exec ${menu}";
         "${modifier}+Shift+q" = "kill";
         "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'";

@@ -6,6 +6,16 @@
     ./rofi.nix
   ];
 
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "image/png" = [ "imv.desktop" ];
+      "image/jpeg" = [ "imv.desktop" ];
+      "application/pdf" = [ "org.pwmt.zathura.desktop" ]; # Or "evince.desktop"
+    };
+  };
+
   programs.chromium = {
     enable = true;
     package = pkgs.google-chrome.override {
