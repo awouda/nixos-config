@@ -12,6 +12,7 @@
       # ---- THE HARDWARE TOGGLE ----
       ./hosts/macbook/default.nix
       # ./hosts/xps/default.nix
+      # ./hosts/generic/default.nix
       ./hardware-configuration.nix
       ./sway.nix
     ];
@@ -31,7 +32,6 @@
 
 
   networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -42,7 +42,7 @@
   # Allow unfree (for Broadcom a.o.)
   nixpkgs.config.allowUnfree = true;
 
-  # Networking
+  # Networking: gives us nmcli and nm-applet
   networking.networkmanager.enable = true;
 
   # Set your time zone.
