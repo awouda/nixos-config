@@ -49,7 +49,6 @@
         smartGaps = true;
       };
 
-
       colors = {
         focused = {
           border = "#bbbbbb"; # Slightly softer white/gray
@@ -64,6 +63,12 @@
           text = "#888888";
           indicator = "#282828";
           childBorder = "#333333";
+        };
+      };
+
+      input = {
+        "type:touchpad" = {
+          tap = "enabled";
         };
       };
 

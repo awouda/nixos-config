@@ -25,6 +25,11 @@ let
   };
 in
 {
+
+imports = [
+    ./neovim.nix  
+  ];
+
   home.packages = [ git-fuzzy-pkg ];
 
   programs.starship = {
