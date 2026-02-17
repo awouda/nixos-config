@@ -59,6 +59,8 @@ in
   # ONLY CLI, DevOps Tools, and Fonts remain here!
   home.packages = with pkgs; [
     (myScript "fshow")
+    (myScript "wifi")
+    (myScript "autopaste")
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
     # --- DevOps & CLI ---

@@ -26,8 +26,8 @@ let
 in
 {
 
-imports = [
-    ./neovim.nix  
+  imports = [
+    ./neovim.nix
   ];
 
   home.packages = [ git-fuzzy-pkg ];
@@ -111,6 +111,7 @@ imports = [
       cat = "bat -p ";
       gfs = "git fuzzy status";
       gfl = "fshow";
+      sp = " wl-paste > screenshot_$(date +%F_%T).png ";
     };
   };
 }

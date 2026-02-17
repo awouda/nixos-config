@@ -137,6 +137,7 @@
     wget
     pciutils
     usbutils
+    dnsutils
 
     jetbrains.idea
     spotify

@@ -92,8 +92,6 @@
         "${modifier}+Shift+q" = "kill";
         "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'";
         "${modifier}+space" = "floating toggle";
-        # Clipboard History
-        "${modifier}+Control+h" = "exec cliphist list | rofi -dmenu | cliphist decode | wl-copy";
         # Manual lock with Super+L
         "${modifier}+Control+l" = "exec ${pkgs.swaylock-effects}/bin/swaylock -f --screenshots --clock --indicator --effect-blur 7x5";
 
@@ -105,9 +103,13 @@
         "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
 
         # Screenshot (Your custom shortcut)
-        "Control+Mod4+s" = "exec grim -g \"$(slurp)\" - | wl-copy";
+        "${modifier}+Control+s" = "exec grim -g \"$(slurp)\" -t png - | wl-copy -t image/png";
 
+        # rofi wifi menu
+        "${modifier}+w" = "exec wifi";
 
+        # Clipboard History with Auto-Paste
+        "${modifier}+Control+p" = "exec autopaste";
       };
       window.commands = [
         {
@@ -135,5 +137,3 @@
     '';
   };
 }
-
-
