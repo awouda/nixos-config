@@ -19,7 +19,7 @@ in
   home.stateVersion = "25.11";
   home.sessionVariables = {
     XDG_DATA_DIRS = "$GSETTINGS_SCHEMAS_PATH:$XDG_DATA_DIRS:/home/alex/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
-    DIRENV_LOG_FORMAT = "";
+    DIRENV_LOG_FORMAT = " ";
   };
 
   # fonts configuration
