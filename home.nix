@@ -84,6 +84,8 @@ in
     silver-searcher
     zoxide
     awscli2
+    k9s
+    lazydocker
   ];
 }
 

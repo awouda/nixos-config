@@ -20,6 +20,8 @@
     users.alex = import ./home.nix;
   };
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # This enables the docker daemon and the docker-compose CLI plugin
   virtualisation.docker.enable = true;
 

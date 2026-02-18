@@ -75,7 +75,7 @@
       # Output (Display Scaling & Position)
       output = {
         "*" = {
-          scale = "1.8";
+          scale = "2.2";
           # pos = "0 0"; # only enable this when using eDP-1 as output
         };
         "HDMI-A-2" = {

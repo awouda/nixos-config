@@ -11,5 +11,5 @@ echo "$selected" | cliphist decode | wl-copy
 
 # The Wayland Magic: Wait a fraction of a second for Rofi to close 
 # so your target window regains focus, then simulate Shift+Insert (Universal Paste)
-sleep 0.15
+sleep 0.05
 wtype -M shift -k Insert -m shift
