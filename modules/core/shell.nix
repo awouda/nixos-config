@@ -103,7 +103,6 @@ in
         . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
        fi
 
-       export DIRENV_LOG_FORMAT=""
 
       # ==============================================================================
       # FZF & ATUIN INTEGRATION (Optimized for NixOS)
