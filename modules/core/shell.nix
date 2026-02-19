@@ -68,39 +68,45 @@ in
     };
   };
 
-  # Direnv setup
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+    # This ensures direnv reads the silent format from its own config
+    config = {
+      global.log_format = "";
+    };
   };
 
   programs.bash = {
     enable = true;
     initExtra = ''
+      # Set the silence variable immediately
+      export DIRENV_LOG_FORMAT=""
 
-       # Cat and copy to Wayland clipboard
-       ccat() {
-         cat "$@" | wl-copy
-         echo "Copied to clipboard!"
-       }
+      # Cat and copy to Wayland clipboard
+      ccat() {
+        cat "$@" | wl-copy
+        echo "Copied to clipboard!"
+      }
 
-       if [ -d /etc/nixos/.git ]; then
-         CHANGES=$(git -C /etc/nixos status --porcelain)
-           if [ -n "$CHANGES" ]; then
-             echo -e "\e[33m󱈚 Ops Alert: Uncommitted changes in /etc/nixos\e[0m"
-           fi
-       fi
+      if [ -d /etc/nixos/.git ]; then
+        CHANGES=$(git -C /etc/nixos status --porcelain)
+          if [ -n "$CHANGES" ]; then
+            echo -e "\e[33m󱈚 Ops Alert: Uncommitted changes in /etc/nixos\e[0m"
+          fi
+      fi
 
-       # Java Check
-       if ! grep -q "programs.java" /etc/nixos/*.nix; then
-         if command -v java >/dev/null; then
-           echo -e "\e[31m󰓅 Warning: Java is installed but not declared in Nix config!\e[0m"
-         fi
-       fi
+      # Java Check
+      if ! grep -q "programs.java" /etc/nixos/*.nix; then
+        if command -v java >/dev/null; then
+          echo -e "\e[31m󰓅 Warning: Java is installed but not declared in Nix config!\e[0m"
+        fi
+      fi
 
-       if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
-        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-       fi
+      if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      fi
 
     '';
     shellAliases = {
