@@ -77,7 +77,6 @@ in
   programs.bash = {
     enable = true;
     initExtra = ''
-      eval "$(starship init bash)"
 
        # Cat and copy to Wayland clipboard
        ccat() {
@@ -102,36 +101,6 @@ in
        if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
         . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
        fi
-
-
-      # ==============================================================================
-      # FZF & ATUIN INTEGRATION (Optimized for NixOS)
-      # ==============================================================================
-
-      # 1. Source FZF scripts directly from the Nix store
-      # This enables Ctrl-T (files) and Alt-C (directories)
-      if [ -n "$PKGS_FZF" ]; then
-          # Use the environment variable if defined, otherwise fall back to path lookup
-          FZF_BASE="$PKGS_FZF"
-      else
-          FZF_BASE="${pkgs.fzf}"
-      fi
-
-      source "$FZF_BASE/share/fzf/completion.bash"
-      source "$FZF_BASE/share/fzf/key-bindings.bash"
-
-      # 2. Configure 'cd' + TAB magic
-      # Usage: cd [path]**[TAB]
-      _fzf_setup_completion path cd
-
-      # 3. FZF Look & Feel (Rice-friendly)
-      export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --inline-info"
-
-      # 4. Initialize Atuin (MUST come after fzf sourcing)
-      # This ensures Atuin's Ctrl-R takes precedence over fzf's history search
-      if command -v atuin >/dev/null; then
-          eval "$(atuin init bash)"
-      fi
 
     '';
     shellAliases = {
