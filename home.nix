@@ -69,7 +69,6 @@ in
     htop
     btop
     yazi
-    fzf
     azure-cli
     yq
     jq
