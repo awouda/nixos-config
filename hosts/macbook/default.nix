@@ -24,4 +24,14 @@
   # Toggle Fn key behavior
   boot.kernelParams = [ "hid_apple.fnmode=2" ];
 
+
+  # Enable Bluetooth hardware support
+  hardware.bluetooth.enable = true;
+
+  # Optional: Power on the controller on boot
+  hardware.bluetooth.powerOnBoot = true;
+
+  # Enable Blueman for the tray applet and manager
+  services.blueman.enable = true;
+
 }

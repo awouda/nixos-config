@@ -73,5 +73,6 @@
     papirus-icon-theme
     gnome-themes-extra
     zapzap
+    blueman
   ];
 }

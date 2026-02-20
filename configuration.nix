@@ -125,6 +125,7 @@
     pciutils
     usbutils
     dnsutils
+    bluez
 
     jetbrains.idea
     spotify
