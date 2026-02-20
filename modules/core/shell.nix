@@ -110,7 +110,6 @@ in
 
     '';
     shellAliases = {
-      nrs = " sudo nixos-rebuild switch ";
       nconf = " vi /etc/nixos/configuration.nix ";
       hconf = " vi /etc/nixos/home.nix ";
       gco = " git checkout ";
@@ -124,6 +123,16 @@ in
       gfs = "git fuzzy status";
       gfl = "fshow";
       sp = " wl-paste > screenshot_$(date +%F_%T).png ";
+
+      # FAST SWITCH: Use this for 90% of changes (shell, aliases, scripts)
+      # It adds all files to git automatically so you don't hit the "file not found" error.
+      nrs = "git add . && sudo nixos-rebuild switch --flake .";
+
+      # SYSTEM UPDATE: Use this when you want a new kernel or newer package versions.
+      nru = "nix flake update && git add . && sudo nixos-rebuild switch --flake .";
+
+      # TEST SWITCH: Just like nrs, but doesn't add a boot entry (good for testing rices).
+      nrt = "git add . && sudo nixos-rebuild test --flake .";
     };
   };
 }
