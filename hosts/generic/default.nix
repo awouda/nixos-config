@@ -2,7 +2,12 @@
 
 {
   # --- Generic Fallback Profile ---
+  imports = [
+    ../../configuration.nix
+    ../../hardware-configuration.nix
+  ];
 
+  networking.hostName = "lap1-nixos";
   # 1. Load all standard Linux firmware (Gets Wi-Fi/Bluetooth working on 99% of machines)
   hardware.enableAllFirmware = true;
 

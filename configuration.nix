@@ -3,22 +3,8 @@
 {
   imports =
     [
-      <home-manager/nixos>
-      ./hardware-configuration.nix # must be the one for your hardware
       ./modules/desktop/sway-system.nix
-      # ---- THE HARDWARE TOGGLE ----
-      ./hosts/macbook/default.nix
-      # ./hosts/xps/default.nix
-      # ./hosts/generic/default.nix
-      # ---- END HARDWARE TOGGLE ----
     ];
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    backupFileExtension = "backup";
-    users.alex = import ./home.nix;
-  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -29,8 +15,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Enable networking
-  networking.hostName = "nixos"; # Define your hostname.
   # Networking: gives us nmcli and nm-applet
   networking.networkmanager.enable = true;
 

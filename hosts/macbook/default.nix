@@ -1,11 +1,18 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ../../configuration.nix
+    ./hardware-configuration.nix
+  ];
+
+  networking.hostName = "mbp-nixos";
+
   # Apple MacBook Pro 11,1 specific config
   hardware.facetimehd.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [
-    "broadcom-sta-6.30.223.271-59-6.12.70"
+    "broadcom-sta-6.30.223.271-59-6.12.73"
   ];
 
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];

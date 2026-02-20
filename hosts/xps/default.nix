@@ -2,6 +2,12 @@
 
 {
   # --- Dell XPS 14/16 (Intel Panther Lake X7 358H) ---
+  imports = [
+    ../../configuration.nix
+    ../../hardware-configuration.nix
+  ];
+
+  networking.hostName = "xps-nixos";
 
   # Enable proprietary firmware (crucial for modern Intel microcode and WiFi)
   hardware.enableAllFirmware = true;
