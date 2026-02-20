@@ -60,7 +60,6 @@ in
   home.packages = with pkgs; [
     (myScript "fshow")
     (myScript "wifi")
-    (myScript "autopaste")
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
     # --- DevOps & CLI ---

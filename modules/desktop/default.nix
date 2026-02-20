@@ -64,7 +64,7 @@
     clipman
     networkmanagerapplet
     wtype
-    cliphist
+    clipman
     guvcview
     mpv
     imv

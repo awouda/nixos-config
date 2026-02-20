@@ -108,11 +108,13 @@
         # rofi wifi menu
         "${modifier}+w" = "exec wifi";
 
-        # Clipboard History with Auto-Paste
-        "${modifier}+Control+p" = "exec autopaste";
+        # Clipboard History 
+        "${modifier}+Control+p" = "exec clipman pick -t rofi";
+
       };
       window.commands = [
         {
+
           command = "floating enable, sticky enable, resize set 640 480, move position center";
           criteria = { app_id = "guvcview"; };
         }
@@ -124,16 +126,22 @@
       # Autostart
       startup = [
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
-        { command = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store"; }
-        { command = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store"; }
+        { command = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.clipman}/bin/clipman store --no-persist"; }
       ];
     };
-    extraConfig = ''
-      exec swaymsg workspace number 1
+    extraConfig =
+      # language=bash
+      ''
+        # Disable laptop screen when lid is closed
+        bindswitch lid:on output eDP-1 disable
+        # Re-enable laptop screen when lid is opened
+        bindswitch lid:off output eDP-1 enable
 
-      # Essential for making GTK apps snappy and functional on Wayland
-      exec dbus-update-activation-environment --all
-      exec systemctl --user import-environment PATH JAVA_HOME
-    '';
+        exec swaymsg workspace number 1
+
+        # Essential for making GTK apps snappy and functional on Wayland
+        exec dbus-update-activation-environment --all
+        exec systemctl --user import-environment PATH JAVA_HOME
+      '';
   };
 }
