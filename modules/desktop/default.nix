@@ -74,5 +74,6 @@
     gnome-themes-extra
     zapzap
     blueman
+    helix
   ];
 }
