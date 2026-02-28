@@ -63,6 +63,7 @@ in
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
     # --- DevOps & CLI ---
+    home-manager
     git
     htop
     yazi
@@ -83,6 +84,7 @@ in
     k9s
     lazydocker
     linuxPackages.cpupower
+    blesh
 
     zip
     xz

@@ -30,16 +30,74 @@ in
     ./neovim.nix
   ];
 
+
+  programs.helix = {
+    enable = true;
+    settings = {
+      theme = "terminal";
+      editor = {
+        line-number = "relative";
+        cursor-shape = {
+          insert = "bar";
+          normal = "block";
+        };
+      };
+    };
+  };
+
+
   home.packages = [ git-fuzzy-pkg ];
+
+  #  programs.starship = {
+  #    enable = true;
+  #    settings = {
+  #      format = "$directory$git_branch$git_status $time $character";
+  #      time = {
+  #        disabled = false;
+  #        style = "yellow";
+  #        format = "[$time]($style)";
+  #      };
+  #    };
+  #  };
+
 
   programs.starship = {
     enable = true;
     settings = {
-      format = "$directory$git_branch$git_status $time $character";
+      # Tokyo Night Palette
+      palette = "tokyo_night";
+      palettes.tokyo_night = {
+        blue = "#7aa2f7";
+        magenta = "#bb9af7";
+        cyan = "#7dcfff";
+        green = "#9ece6a";
+        red = "#f7768e";
+        yellow = "#e0af68";
+      };
+
+      # Prompt Layout
+      format = "$directory$git_branch$git_status$character";
+      right_format = "$time";
+
+      directory = {
+        style = "bold blue";
+        truncate_to_repo = true;
+      };
+
+      git_branch = {
+        symbol = " ";
+        style = "bold magenta";
+      };
+
+      character = {
+        success_symbol = "[❯](bold green)";
+        error_symbol = "[❯](bold red)";
+      };
+
       time = {
         disabled = false;
-        style = "yellow";
-        format = "[$time]($style)";
+        time_format = "%R"; # HH:MM
+        style = "bold yellow";
       };
     };
   };
@@ -81,32 +139,44 @@ in
   programs.bash = {
     enable = true;
     initExtra = ''
-      # Set the silence variable immediately
-      export DIRENV_LOG_FORMAT=""
+       # Initialize ble.sh early (Syntax highlighting and autocompletion)
+       [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh --noattach
 
-      # Cat and copy to Wayland clipboard
-      ccat() {
-        cat "$@" | wl-copy
-        echo "Copied to clipboard!"
-      }
+      bleopt term_true_colors=1 
 
-      if [ -d /etc/nixos/.git ]; then
-        CHANGES=$(git -C /etc/nixos status --porcelain)
-          if [ -n "$CHANGES" ]; then
-            echo -e "\e[33m󱈚 Ops Alert: Uncommitted changes in /etc/nixos\e[0m"
-          fi
-      fi
+       export COLORTERM=truecolor
 
-      # Java Check
-      if ! grep -q "programs.java" /etc/nixos/*.nix; then
-        if command -v java >/dev/null; then
-          echo -e "\e[31m󰓅 Warning: Java is installed but not declared in Nix config!\e[0m"
-        fi
-      fi
+       eval "$(starship init bash)"
 
-      if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
-       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-      fi
+       # Set the silence variable immediately
+       export DIRENV_LOG_FORMAT=""
+
+       # Cat and copy to Wayland clipboard
+       ccat() {
+         cat "$@" | wl-copy
+         echo "Copied to clipboard!"
+       }
+
+       if [ -d /etc/nixos/.git ]; then
+         CHANGES=$(git -C /etc/nixos status --porcelain)
+           if [ -n "$CHANGES" ]; then
+             echo -e "\e[33m󱈚 Ops Alert: Uncommitted changes in /etc/nixos\e[0m"
+           fi
+       fi
+
+       # Java Check
+       if ! grep -q "programs.java" /etc/nixos/*.nix; then
+         if command -v java >/dev/null; then
+           echo -e "\e[31m󰓅 Warning: Java is installed but not declared in Nix config!\e[0m"
+         fi
+       fi
+
+       if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+       fi
+
+       # ACTIVATE Ble.sh
+       [[ $- == *i* ]] && ble-attach
 
     '';
     shellAliases = {

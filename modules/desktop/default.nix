@@ -6,13 +6,15 @@
     ./rofi.nix
   ];
 
-
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
       "image/png" = [ "imv.desktop" ];
       "image/jpeg" = [ "imv.desktop" ];
       "application/pdf" = [ "org.pwmt.zathura.desktop" ]; # Or "evince.desktop"
+      "text/html" = "google-chrome.desktop";
+      "x-scheme-handler/http" = "google-chrome.desktop";
+      "x-scheme-handler/https" = "google-chrome.desktop";
     };
   };
 
