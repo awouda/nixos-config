@@ -30,7 +30,6 @@ in
     ./neovim.nix
   ];
 
-
   programs.helix = {
     enable = true;
     settings = {
@@ -139,44 +138,45 @@ in
   programs.bash = {
     enable = true;
     initExtra = ''
-       # Initialize ble.sh early (Syntax highlighting and autocompletion)
-       [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh --noattach
+      # Initialize ble.sh early (Syntax highlighting and autocompletion)
+      [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh --noattach
 
       bleopt term_true_colors=1 
 
-       export COLORTERM=truecolor
+      export COLORTERM=truecolor
+      export TERM=xterm-256color
 
-       eval "$(starship init bash)"
+      eval "$(starship init bash)"
 
-       # Set the silence variable immediately
-       export DIRENV_LOG_FORMAT=""
+      # Set the silence variable immediately
+      export DIRENV_LOG_FORMAT=""
 
-       # Cat and copy to Wayland clipboard
-       ccat() {
-         cat "$@" | wl-copy
-         echo "Copied to clipboard!"
-       }
+      # Cat and copy to Wayland clipboard
+      ccat() {
+        cat "$@" | wl-copy
+        echo "Copied to clipboard!"
+      }
 
-       if [ -d /etc/nixos/.git ]; then
-         CHANGES=$(git -C /etc/nixos status --porcelain)
-           if [ -n "$CHANGES" ]; then
-             echo -e "\e[33m󱈚 Ops Alert: Uncommitted changes in /etc/nixos\e[0m"
-           fi
-       fi
+      if [ -d /etc/nixos/.git ]; then
+        CHANGES=$(git -C /etc/nixos status --porcelain)
+          if [ -n "$CHANGES" ]; then
+            echo -e "\e[33m󱈚 Ops Alert: Uncommitted changes in /etc/nixos\e[0m"
+          fi
+      fi
 
-       # Java Check
-       if ! grep -q "programs.java" /etc/nixos/*.nix; then
-         if command -v java >/dev/null; then
-           echo -e "\e[31m󰓅 Warning: Java is installed but not declared in Nix config!\e[0m"
-         fi
-       fi
+      # Java Check
+      if ! grep -q "programs.java" /etc/nixos/*.nix; then
+        if command -v java >/dev/null; then
+          echo -e "\e[31m󰓅 Warning: Java is installed but not declared in Nix config!\e[0m"
+        fi
+      fi
 
-       if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
-        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-       fi
+      if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      fi
 
-       # ACTIVATE Ble.sh
-       [[ $- == *i* ]] && ble-attach
+      # ACTIVATE Ble.sh
+      [[ $- == *i* ]] && ble-attach
 
     '';
     shellAliases = {

@@ -11,7 +11,6 @@
   # This enables the docker daemon and the docker-compose CLI plugin
   virtualisation.docker.enable = true;
 
-  services.logind.lidSwitchExternalPower = "ignore";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

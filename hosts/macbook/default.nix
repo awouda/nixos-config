@@ -22,7 +22,20 @@
   boot.blacklistedKernelModules = [ "b43" "ssb" "bcma" ];
 
   # Toggle Fn key behavior
-  boot.kernelParams = [ "hid_apple.fnmode=2" ];
+  boot.kernelParams = [
+
+    # Forces the native Intel backlight driver (fixes the "Skipping" error)
+    "acpi_backlight=vendor"
+
+    # Prevents Haswell GPUs from entering a state they can't wake up from
+    "i915.enable_dc=0"
+
+    # Fixes a specific race condition in the Intel idle states on 2014 MBPs
+    "intel_idle.max_cstate=1"
+
+    # toggle Fn key
+    "hid_apple.fnmode=2"
+  ];
 
 
   # Enable Bluetooth hardware support
@@ -33,5 +46,25 @@
 
   # Enable Blueman for the tray applet and manager
   services.blueman.enable = true;
+
+  services.tlp.settings = {
+    # Keeps the internal USB/SMC bus powered for a clean wake
+    USB_AUTOSUSPEND = 0;
+
+    # Ensures the i915 driver doesn't try to save too much power on battery
+    PCIE_ASPM_ON_BAT = "performance";
+  };
+
+
+  services.logind.settings.Login = {
+    # On Battery: Close lid = Sleep
+    HandleLidSwitch = "suspend";
+
+    # On Power: Close lid = Stay awake (for your external monitor)
+    HandleLidSwitchExternalPower = "ignore";
+
+    # If connected to a dock: Stay awake
+    HandleLidSwitchDocked = "ignore";
+  };
 
 }

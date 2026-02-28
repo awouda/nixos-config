@@ -32,9 +32,14 @@
 
   # Panther Lake Suspend Workaround 
   # (Keeps the machine running with the screen off until S0ix sleep is fixed upstream)
-  services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchExternalPower = "ignore";
+  services.logind.settings.Login = {
+    # On the XPS, we 'ignore' the lid to avoid the buggy suspend
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+
+    # Optional: Just turn off the screen instead of sleeping
+    IdleAction = "lock";
+    IdleActionSec = "5min";
   };
 
   # Intel Thermal Daemon (Prevents thermal throttling on modern Intel CPUs)
