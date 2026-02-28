@@ -3,6 +3,7 @@
 {
   programs.sway = {
     enable = true;
+    package = pkgs.swayfx;
     wrapperFeatures.gtk = true; # otherwise some apps look like from '95
   };
 

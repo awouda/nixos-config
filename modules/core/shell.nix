@@ -178,6 +178,8 @@ in
       # ACTIVATE Ble.sh
       [[ $- == *i* ]] && ble-attach
 
+      eval "$(zoxide init bash)"
+
     '';
     shellAliases = {
       nconf = " vi /etc/nixos/configuration.nix ";

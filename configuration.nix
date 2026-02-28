@@ -124,6 +124,9 @@
     usbutils
     dnsutils
     bluez
+    nwg-bar
+    swaybg
+    swayfx
 
     jetbrains.idea
     spotify

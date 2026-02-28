@@ -10,8 +10,10 @@ in
       ./modules/desktop/default.nix
 
       # ---- THEME TOGGLE ----
-      ./modules/rices/monochrome/sway.nix
-      ./modules/rices/monochrome/waybar.nix
+      #./modules/rices/monochrome/sway.nix
+      #./modules/rices/monochrome/waybar.nix
+      ./modules/rices/sway-minimal/sway.nix
+      ./modules/rices/sway-minimal/waybar.nix
     ];
 
   home.username = "alex";
