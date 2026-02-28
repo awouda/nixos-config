@@ -47,19 +47,6 @@ in
 
   home.packages = [ git-fuzzy-pkg ];
 
-  #  programs.starship = {
-  #    enable = true;
-  #    settings = {
-  #      format = "$directory$git_branch$git_status $time $character";
-  #      time = {
-  #        disabled = false;
-  #        style = "yellow";
-  #        format = "[$time]($style)";
-  #      };
-  #    };
-  #  };
-
-
   programs.starship = {
     enable = true;
     settings = {
@@ -103,7 +90,7 @@ in
 
   programs.zoxide = {
     enable = true;
-    enableBashIntegration = true;
+    enableBashIntegration = false;
   };
 
   programs.fzf = {
@@ -175,11 +162,11 @@ in
        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
       fi
 
-      # ACTIVATE Ble.sh
-      [[ $- == *i* ]] && ble-attach
-
+      # this must be before ble activation
       eval "$(zoxide init bash)"
 
+      # ACTIVATE Ble.sh
+      [[ $- == *i* ]] && ble-attach
     '';
     shellAliases = {
       nconf = " vi /etc/nixos/configuration.nix ";
