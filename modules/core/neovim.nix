@@ -18,7 +18,9 @@
       nnoremap S "+y
       vnoremap S "+y
 
-      autocmd BufWritePost *.nix silent! !${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt %
+      " Replace the hardcoded path with the global command
+      autocmd BufWritePost *.nix silent! !nixpkgs-fmt %
+
       " Set leader to comma
       let mapleader = ","
 

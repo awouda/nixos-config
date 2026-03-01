@@ -24,7 +24,7 @@ in
   };
 
   # fonts configuration
-  fonts.fontconfig.enable = true;
+        fonts.fontconfig.enable = true;
 
   fonts.fontconfig.defaultFonts = {
     serif = [ "JetBrainsMono Nerd Font" ];
@@ -87,6 +87,7 @@ in
     lazydocker
     linuxPackages.cpupower
     blesh
+    nixpkgs-fmt
 
     zip
     xz
@@ -144,5 +145,3 @@ in
 
   ];
 }
-
-
