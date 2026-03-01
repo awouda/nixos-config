@@ -24,7 +24,7 @@ in
   };
 
   # fonts configuration
-        fonts.fontconfig.enable = true;
+  fonts.fontconfig.enable = true;
 
   fonts.fontconfig.defaultFonts = {
     serif = [ "JetBrainsMono Nerd Font" ];
@@ -58,10 +58,29 @@ in
     package = pkgs.temurin-bin-21;
   };
 
+
+
+  systemd.user.services.clipse = {
+    Unit = {
+      Description = "Clipse clipboard manager daemon";
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.clipse}/bin/clipse -listen";
+      Restart = "always";
+      # This ensures it connects to your Wayland session correctly
+      Environment = [ "WAYLAND_DISPLAY=wayland-1" "DISPLAY=:0" ];
+    };
+    Install = { WantedBy = [ "graphical-session.target" ]; };
+  };
+
+
   # ONLY CLI, DevOps Tools, and Fonts remain here!
   home.packages = with pkgs; [
     (myScript "fshow")
     (myScript "wifi")
+    (myScript "sway-windows")
+    (myScript "finder")
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
     # --- DevOps & CLI ---
@@ -72,6 +91,7 @@ in
     azure-cli
     yq
     jq
+    fd
     httpie
     wget
     curl
@@ -88,6 +108,7 @@ in
     linuxPackages.cpupower
     blesh
     nixpkgs-fmt
+    clipse
 
     zip
     xz

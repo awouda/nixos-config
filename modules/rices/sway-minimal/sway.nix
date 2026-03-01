@@ -36,7 +36,7 @@
     config = rec {
       modifier = "Mod4";
       terminal = "alacritty";
-      menu = "rofi -show drun -show-icons";
+      menu = "fuzzel";
 
       window = {
         titlebar = false;
@@ -51,7 +51,6 @@
         outer = 10;
         smartGaps = true;
       };
-
 
       colors = {
         focused = {
@@ -76,7 +75,6 @@
           childBorder = "#1e1e2e";
         };
       };
-
 
       input = {
         "type:touchpad" = {
@@ -117,18 +115,30 @@
         # Screenshot (Your custom shortcut)
         "${modifier}+Control+s" = "exec grim -g \"$(slurp)\" -t png - | wl-copy -t image/png";
 
-        # rofi wifi menu
-        "${modifier}+w" = "exec wifi";
+        # clipboard history
+        # Mod4+Ctrl+P opens Clipse. When Clipse closes (after you hit Enter), 
+        # Sway waits 0.1s and then "types" Ctrl+V.
+        "${modifier}+Control+p" = "exec ${pkgs.alacritty}/bin/alacritty --class clipse -e ${pkgs.clipse}/bin/clipse && sleep 0.1 && ${pkgs.wtype}/bin/wtype -M control -P v -m control";
 
-        # Clipboard History 
-        "${modifier}+Control+p" = "exec clipman pick -t rofi";
+        # Window Switcher (Classic Alt-Tab style but with Super)
+        "${modifier}+Tab" = "exec sway-windows";
 
+        # Global Finder (Raycast style)
+        # Using Control + Mod4 + f to avoid the fullscreen conflict
+        "Control+${modifier}+f" = "exec finder";
       };
+
+
+      # --- Verify your Window Commands ---
       window.commands = [
         {
-
-          command = "floating enable, sticky enable, resize set 640 480, move position center";
           criteria = { app_id = "guvcview"; };
+          command = "floating enable, sticky enable, resize set 640 480, move position center";
+        }
+        {
+          # Ensure this is a separate set in the list
+          criteria = { app_id = "clipse"; };
+          command = "floating enable, resize set 800 600, move position center";
         }
       ];
 
@@ -138,7 +148,7 @@
       # Autostart
       startup = [
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
-        { command = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.clipman}/bin/clipman store --no-persist"; }
+        { command = "${pkgs.clipse}/bin/clipse -listen"; }
       ];
     };
     extraConfig =

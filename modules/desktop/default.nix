@@ -4,6 +4,7 @@
 {
   imports = [
     ./rofi.nix
+    ./fuzzel.nix
   ];
 
   xdg.mimeApps = {
