@@ -116,10 +116,8 @@
         "${modifier}+Control+s" = "exec grim -g \"$(slurp)\" -t png - | wl-copy -t image/png";
 
         # clipboard history
-        # Mod4+Ctrl+P opens Clipse. When Clipse closes (after you hit Enter), 
-        # Sway waits 0.1s and then "types" Ctrl+V.
-        "${modifier}+Control+p" = "exec ${pkgs.alacritty}/bin/alacritty --class clipse -e ${pkgs.clipse}/bin/clipse && sleep 0.1 && ${pkgs.wtype}/bin/wtype -M control -P v -m control";
-
+        # Just use the name of the script
+        "${modifier}+Control+p" = "exec clip-paster";
         # Window Switcher (Classic Alt-Tab style but with Super)
         "${modifier}+Tab" = "exec sway-windows";
 
@@ -148,7 +146,10 @@
       # Autostart
       startup = [
         { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
-        { command = "${pkgs.clipse}/bin/clipse -listen"; }
+        # Watcher for text
+        { command = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store"; }
+        # Watcher for images (perfect for your grim/slurp screenshots)
+        { command = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store"; }
       ];
     };
     extraConfig =

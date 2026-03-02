@@ -65,9 +65,9 @@
     slurp
     wl-clipboard
     clipman
+    cliphist
     networkmanagerapplet
     wtype
-    clipman
     guvcview
     mpv
     imv
