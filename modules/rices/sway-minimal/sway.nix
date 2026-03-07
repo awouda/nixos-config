@@ -77,23 +77,32 @@
       };
 
       input = {
+        # Applies to all keyboards
+        "type:keyboard" = {
+          xkb_options = "caps:escape,altwin:swap_lalt_lwin";
+        };
         "type:touchpad" = {
           tap = "enabled";
+          dwt = "enabled"; # Palm detection 
+          natural_scroll = "enabled";
+        };
+        "type:pointer" = {
+          left_handed = "enabled";
         };
       };
 
       output = {
         "*" = {
           bg = "${./wallpaper/light-ring.jpg} fill";
-          scale = "2.0";
+          scale = "2.0"; # This hits your laptop screen
         };
-        "HDMI-A-2" = {
-          res = "3840x1600@29.998Hz";
-          pos = "1280 0";
-          scale = "1";
+        "DP-1" = {
+          # Updated from HDMI-A-2 based on your swaymsg output
+          res = "3840x1600@59.994Hz"; # Updated from 29.998Hz
+          pos = "0 0"; # Changed position to 0 0 if this is your primary workspace
+          scale = "1.0"; # Keeps the ultrawide crisp
         };
       };
-
 
       # Keybindings (Merging your custom keys with defaults)
       keybindings = lib.mkOptionDefault {
@@ -124,6 +133,8 @@
         # Global Finder (Raycast style)
         # Using Control + Mod4 + f to avoid the fullscreen conflict
         "Control+${modifier}+f" = "exec finder";
+
+        "${modifier}+Shift+Backspace" = "exec swaymsg \"output * dpms on\"";
       };
 
 
