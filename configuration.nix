@@ -51,6 +51,8 @@
   services.gvfs.enable = true; # Mount, trash, and remote fs support
   services.tumbler.enable = true; # Thumbnail support for Thunar
   services.gnome.gnome-keyring.enable = true; # Stops apps from hanging on "Secret" lookups
+  # auto login gnome keyring
+  security.pam.services.login.enableGnomeKeyring = true;
 
   # Disable the X11 windowing system if not needed
   services.xserver.enable = false;
@@ -90,6 +92,8 @@
   };
 
   services.power-profiles-daemon.enable = false;
+
+  services.upower.enable = true;
 
   # Define a user account. 
   users.users.alex = {
