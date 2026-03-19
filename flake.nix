@@ -5,14 +5,35 @@
     # NixOS official package source, using 25.11 stable branch
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
+
+    # Bleeding edge stuff for ROCm 7.x / R9700 support
+    bleedingedge.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     # Home Manager, using 25.11 stable branch
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, bleedingedge, home-manager, ... }@inputs: {
     nixosConfigurations = {
+
+      # --- AMD Ryzen Workstation (wojo-bak) ---
+      wojo-amd-desktop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        # Passing 'inputs' allows modules to use 'inputs.bleedingedge'
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/wojo-amd-desktop/default.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.alex = import ./home.nix;
+            home-manager.backupFileExtension = "backup";
+          }
+        ];
+      };
 
       # Dell XPS 13
       xps-nixos = nixpkgs.lib.nixosSystem {

@@ -100,7 +100,7 @@
           # Updated from HDMI-A-2 based on your swaymsg output
           res = "3840x1600@59.994Hz"; # Updated from 29.998Hz
           pos = "0 0"; # Changed position to 0 0 if this is your primary workspace
-          scale = "1.0"; # Keeps the ultrawide crisp
+          scale = "1.25"; # Keeps the ultrawide crisp
         };
       };
 

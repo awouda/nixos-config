@@ -21,7 +21,7 @@
 
   # 2. DESKTOP ENVIRONMENTS (GNOME for Family, Sway for Alex)
   services.xserver.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = true;
   programs.sway.enable = true;
 
   # XDG Portals: Moved to system level for proper Sway/Gnome compatibility

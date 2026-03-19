@@ -56,8 +56,8 @@
   # might be needed for old gtk apps
   services.xserver.enable = true;
 
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.wayland = true;
+  services.displayManager.gdm.enable = true;
+  services.displayManager.gdm.wayland = true;
 
 
   # Add this back to configuration.nix, as default, has overrides in hosts/xxx/default.nix files
@@ -95,6 +95,11 @@
   # Install firefox.
   programs.firefox.enable = true;
 
+
+  # for better pasting experience (??)
+  programs.ydotool.enable = true;
+  # "$mod+V" = "exec cliphist list | wofi --dmenu | cliphist decode | ydotool type --file -"; // check sway config
+
   # Nix Store Management
   nix = {
     settings.auto-optimise-store = true; # Deduplicates files on every build
@@ -129,6 +134,11 @@
     xfce.thunar
     xfce.thunar-volman
     gvfs # Required for icons/trash in Thunar
+
+    pkgs.shotwell
+    parted
+    gparted
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

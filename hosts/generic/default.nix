@@ -25,7 +25,7 @@
 
   # 2. DESKTOP ENVIRONMENTS (GNOME for Family, Sway for Alex)
   services.xserver.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = true;
   programs.sway.enable = true;
 
   users.groups.photos = { };
@@ -102,7 +102,7 @@
 
   # 4. Cleanup
   boot.blacklistedKernelModules = [ "nouveau" ];
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   services.thermald.enable = true;
 
 

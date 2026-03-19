@@ -21,6 +21,7 @@ in
   home.stateVersion = "25.11";
   home.sessionVariables = {
     XDG_DATA_DIRS = "$GSETTINGS_SCHEMAS_PATH:$XDG_DATA_DIRS:/home/alex/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
+    _JAVA_AWT_WM_NONREPARENTING = "1";
   };
 
   # fonts configuration
@@ -46,6 +47,11 @@ in
     };
   };
 
+  dconf.settings = {
+    "org/gnome/desktop/input-sources" = {
+      xkb-options = [ "altwin:swap_lalt_lwin" ];
+    };
+  };
 
   # Java. Current main version 21
   programs.java = {
