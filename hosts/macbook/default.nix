@@ -47,17 +47,17 @@
   # Enable Blueman for the tray applet and manager
   services.blueman.enable = true;
 
-  services.tlp.settings = {
-    # Keeps the internal USB/SMC bus powered for a clean wake
-    USB_AUTOSUSPEND = 0;
-
-    # Ensures the i915 driver doesn't try to save too much power on battery
-    PCIE_ASPM_ON_BAT = "performance";
-    CPU_SCALING_GOVERNOR_ON_AC = "performance";
-    CPU_SCALING_GOVERNOR_ON_BAT = "schedutil"; # Better than powersave for responsiveness
-    CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-    CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_performance";
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_MAX_PERF_ON_AC = 100;
+      CPU_MAX_PERF_ON_BAT = 60;
+      USB_AUTOSUSPEND = 0;
+    };
   };
+  services.power-profiles-daemon.enable = false; # TLP and PPD conflict
+  environment.systemPackages = [ pkgs.linuxPackages.cpupower ];
+
 
   services.logind.settings.Login = {
     # On Battery: Close lid = Sleep

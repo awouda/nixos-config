@@ -1,5 +1,4 @@
 { config, pkgs, ... }:
-
 {
   imports =
     [
@@ -54,8 +53,19 @@
   # auto login gnome keyring
   security.pam.services.login.enableGnomeKeyring = true;
 
-  # Disable the X11 windowing system if not needed
-  services.xserver.enable = false;
+  # might be needed for old gtk apps
+  services.xserver.enable = true;
+
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.wayland = true;
+
+
+  # Add this back to configuration.nix, as default, has overrides in hosts/xxx/default.nix files
+  users.users.alex = {
+    isNormalUser = true;
+    description = "alex";
+    extraGroups = [ "networkmanager" "wheel" "docker" ]; # Core groups only
+  };
 
   # Keep this! Sway uses these settings for your keyboard
   services.xserver.xkb = {
@@ -80,29 +90,6 @@
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
-  };
-
-  # powermanagement
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_MAX_PERF_ON_AC = 100;
-      CPU_MAX_PERF_ON_BAT = 60;
-      USB_AUTOSUSPEND = 0;
-    };
-  };
-
-  services.power-profiles-daemon.enable = false;
-
-  services.upower.enable = true;
-
-  # Define a user account. 
-  users.users.alex = {
-    isNormalUser = true;
-    description = "alex";
-    extraGroups = [ "networkmanager" "wheel" "docker" "video" ];
-    packages = with pkgs; [
-    ];
   };
 
   # Install firefox.

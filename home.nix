@@ -27,17 +27,18 @@ in
   fonts.fontconfig.enable = true;
 
   fonts.fontconfig.defaultFonts = {
-    serif = [ "JetBrainsMono Nerd Font" ];
-    sansSerif = [ "JetBrainsMono Nerd Font" ];
-    monospace = [ "JetBrainsMono Nerd Font" ];
+    # This lets GNOME use standard readable fonts (Inter/Cantarell).
+    serif = [ "DejaVu Serif" ];
+    sansSerif = [ "DejaVu Sans" ];
+    monospace = [ "JetBrainsMono Nerd Font" ]; # Keep this for your terminal/coding
   };
 
   # Set the GTK theme and font
   gtk = {
     enable = true;
     font = {
-      name = "JetBrainsMono Nerd Font"; # 
-      size = 10;
+      name = "Cantarell"; # std Sans font for GTK apps globally
+      size = 11;
     };
     theme = {
       name = "Adwaita-dark"; # 
@@ -45,15 +46,6 @@ in
     };
   };
 
-  # for speed up GTK apps
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-wlr
-      pkgs.xdg-desktop-portal-gtk
-    ];
-    config.common.default = "*";
-  };
 
   # Java. Current main version 21
   programs.java = {
@@ -97,7 +89,6 @@ in
     awscli2
     k9s
     lazydocker
-    linuxPackages.cpupower
     blesh
     nixpkgs-fmt
     clipse
