@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "bleedingedge": {
+      "locked": {
+        "lastModified": 1773821835,
+        "narHash": "sha256-TJ3lSQtW0E2JrznGVm8hOQGVpXjJyXY2guAxku2O9A4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b40629efe5d6ec48dd1efba650c797ddbd39ace0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -39,6 +55,7 @@
     },
     "root": {
       "inputs": {
+        "bleedingedge": "bleedingedge",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }

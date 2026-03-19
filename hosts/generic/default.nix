@@ -1,6 +1,14 @@
 { config, pkgs, lib, ... }:
 
 {
+
+  assertions = [
+    {
+      assertion = config.networking.hostName == "lap1-nixos";
+      message = "ERROR: You are trying to build the lap1-nixos config on a different host!";
+    }
+  ];
+
   # --- Generic Fallback Profile ---
   imports = [
     ../../configuration.nix

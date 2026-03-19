@@ -1,6 +1,14 @@
 { config, pkgs, lib, bleedingedge, ... }:
 
 {
+  assertions = [
+    {
+      assertion = config.networking.hostName == "wojo-amd-desktop";
+      message = "ERROR: You are trying to build the AMD Desktop config on a different host!";
+    }
+  ];
+
+
   imports = [
     ../../configuration.nix # Global settings (Locales, Timezone, Pipewire)
     ./hardware-configuration.nix # Generated hardware file
