@@ -15,7 +15,7 @@
     ./ai.nix # The ROCm 7.x / Ollama stack we built
   ];
 
-  # 1. NETWORKING & KERNEL (Ryzen 9000 & Wi-Fi 7 Readiness)
+  # NETWORKING & KERNEL (Ryzen 9000 & Wi-Fi 7 Readiness)
   networking.hostName = "wojo-amd-desktop";
   boot.kernelPackages = pkgs.linuxPackages_latest; # Crucial for 2026 hardware
   hardware.enableAllFirmware = true;
@@ -24,30 +24,26 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-
-  # 1. Forceer de modernste AMD energie-sturing
   boot.kernelParams = [
     "amd_pstate=active"
     "lockdown=none"
   ];
 
-
-  # 1. De driver voor je MSI moederbord fans (Nuvoton)
+  # MSI fans (Nuvoton)
   boot.kernelModules = [
     "nct6687"
     "i2c-dev"
   ];
+
   boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
 
-  # 2. De MSI-specifieke fix voor de fansnelheid-uitlezing
   boot.extraModprobeConfig = ''
     options nct6687 fan_config=msi_alt1
   '';
 
   programs.coolercontrol.enable = true;
 
-
-  # LACT: De redding voor AMD GPU controle
+  # LACT: for amd gpu overrides
   systemd.services.lactd = {
     description = "AMDGPU Control Daemon";
     enable = false;
@@ -58,10 +54,7 @@
     wantedBy = [ "multi-user.target" ];
   };
 
-
-  # Enable SSH for rsyncing files from your MacBook
-
-  # 2. DESKTOP ENVIRONMENTS (GNOME for Family, Sway for Alex)
+  # DESKTOP ENVIRONMENTS (GNOME for Family, Sway for Alex)
   services.xserver.enable = true;
   services.desktopManager.gnome.enable = true;
   programs.sway.enable = true;
@@ -74,12 +67,8 @@
     config.common.default = "*";
   };
 
-  # 3. USER ACCOUNTS & GROUPS
+  # USER ACCOUNTS & GROUPS
   users.groups.photos = { };
-
-  # Main User (Alex) - Needs access to everything
-
-  # 3. USER ACCOUNTS
   users.users =
     let
       kidConfig = {
@@ -88,21 +77,18 @@
       };
     in
     {
-      # Move alex inside the set here
       alex = {
         isNormalUser = true;
         description = "alex";
         extraGroups = [ "wheel" "networkmanager" "docker" "video" "render" "photos" ];
       };
-
-      # The kids follow
       nout = kidConfig;
       emmeline = kidConfig;
       julia = kidConfig;
     };
 
 
-  # 4. STORAGE & MAINTENANCE
+  # STORAGE & MAINTENANCE
   # Shared photos directory with group write permissions
   systemd.tmpfiles.rules = [
     "d /srv/photos 2775 root photos - -"
@@ -117,7 +103,7 @@
 
   services.openssh.enable = true;
 
-  # 6. SYSTEM TOOLS & NIX-LD
+  # SYSTEM TOOLS & NIX-LD
   # Nix-LD allows you to run unpatched binaries (VS Code, AI tools, etc.)
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
