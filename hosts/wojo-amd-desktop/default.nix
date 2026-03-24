@@ -24,8 +24,42 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 
+
+  # 1. Forceer de modernste AMD energie-sturing
+  boot.kernelParams = [
+    "amd_pstate=active"
+    "lockdown=none"
+  ];
+
+
+  # 1. De driver voor je MSI moederbord fans (Nuvoton)
+  boot.kernelModules = [
+    "nct6687"
+    "i2c-dev"
+  ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
+
+  # 2. De MSI-specifieke fix voor de fansnelheid-uitlezing
+  boot.extraModprobeConfig = ''
+    options nct6687 fan_config=msi_alt1
+  '';
+
+  programs.coolercontrol.enable = true;
+
+
+  # LACT: De redding voor AMD GPU controle
+  systemd.services.lactd = {
+    description = "AMDGPU Control Daemon";
+    enable = false;
+    serviceConfig = {
+      ExecStart = "${pkgs.lact}/bin/lact daemon";
+      Restart = "always";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+
   # Enable SSH for rsyncing files from your MacBook
-  services.openssh.enable = true;
 
   # 2. DESKTOP ENVIRONMENTS (GNOME for Family, Sway for Alex)
   services.xserver.enable = true;
@@ -104,9 +138,28 @@
     pciutils # Helpful for GPU debugging (lspci)
     bluez
     blueman
+    lm_sensors
+    rocmPackages.rocm-smi
+    rocmPackages.rocminfo
+    amdgpu_top
+    coolercontrol.coolercontrol-gui
+    lact
   ];
 
   # 7. HARDWARE SUPPORT
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+
+  # Swap with zram
+  zramSwap.enable = true;
+  zramSwap.memoryPercent = 50;
+
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 8 * 1024;
+  }];
+
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10; # first use zram, then swapfile
+  };
 }

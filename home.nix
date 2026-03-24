@@ -22,6 +22,7 @@ in
   home.sessionVariables = {
     XDG_DATA_DIRS = "$GSETTINGS_SCHEMAS_PATH:$XDG_DATA_DIRS:/home/alex/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
     _JAVA_AWT_WM_NONREPARENTING = "1";
+    WLR_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card0"; #remove when new GPU arrives
   };
 
   # fonts configuration
@@ -59,6 +60,12 @@ in
     package = pkgs.temurin-bin-21;
   };
 
+  programs.git = {
+    enable = true;
+    userName = "Alex Wouda";
+    userEmail = "alex.boxcar902@passinbox.com";
+  };
+
   services.cliphist = {
     enable = true;
     allowImages = true;
@@ -71,6 +78,7 @@ in
     (myScript "sway-windows")
     (myScript "finder")
     (myScript "clip-paster")
+    (myScript "togglemouse")
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
     # --- DevOps & CLI ---
@@ -105,7 +113,7 @@ in
     p7zip
 
     eza
-    neofetch
+    fastfetch
     # networking tools
     mtr # A network diagnostic tool
     iperf3
@@ -152,6 +160,5 @@ in
     ethtool
     pciutils # lspci
     usbutils # lsusb
-
   ];
 }

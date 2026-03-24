@@ -80,27 +80,28 @@
         # Applies to all keyboards
         "type:keyboard" = {
           xkb_options = "caps:escape,altwin:swap_lalt_lwin";
+          repeat_delay = "250";
+          repeat_rate = "40";
         };
         "type:touchpad" = {
           tap = "enabled";
           dwt = "enabled"; # Palm detection 
           natural_scroll = "enabled";
         };
-        "type:pointer" = {
-          left_handed = "enabled";
-        };
+        #"type:pointer" = {
+        #left_handed = "enabled";
+        #};
       };
 
       output = {
         "*" = {
           bg = "${./wallpaper/light-ring.jpg} fill";
-          scale = "2.0"; # This hits your laptop screen
+          scale = "1.0"; # This hits your laptop screen
         };
-        "DP-1" = {
-          # Updated from HDMI-A-2 based on your swaymsg output
-          res = "3840x1600@59.994Hz"; # Updated from 29.998Hz
-          pos = "0 0"; # Changed position to 0 0 if this is your primary workspace
-          scale = "1.25"; # Keeps the ultrawide crisp
+        "LG Electronics LG ULTRAWIDE 208NTYT5M530" = {
+          res = "3840x1600@59.994Hz";
+          pos = "0 0";
+          scale = "1.5";
         };
       };
 
@@ -135,6 +136,8 @@
         "Control+${modifier}+f" = "exec finder";
 
         "${modifier}+Shift+Backspace" = "exec swaymsg \"output * dpms on\"";
+        "${modifier}+Shift+m" = "exec togglemouse";
+
       };
 
 

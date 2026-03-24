@@ -151,19 +151,19 @@ in
           fi
       fi
 
-      # Java Check
-      if ! grep -q "programs.java" /etc/nixos/*.nix; then
-        if command -v java >/dev/null; then
-          echo -e "\e[31m󰓅 Warning: Java is installed but not declared in Nix config!\e[0m"
-        fi
-      fi
-
       if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
       fi
 
       # this must be before ble activation
       eval "$(zoxide init bash)"
+
+
+      # In je initExtra, voor ble-attach:
+      if [[ $- == *i* ]]; then
+        ble-face syntax_error='fg=red,underline'
+        ble-face auto_complete='fg=242'
+      fi
 
       # ACTIVATE Ble.sh
       [[ $- == *i* ]] && ble-attach
