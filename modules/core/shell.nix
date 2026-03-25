@@ -128,6 +128,10 @@ in
       # Initialize ble.sh early (Syntax highlighting and autocompletion)
       [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh --noattach
 
+      if [ -f ~/.bash_secrets ]; then
+      . ~/.bash_secrets
+      fi
+
       bleopt term_true_colors=1 
 
       export COLORTERM=truecolor

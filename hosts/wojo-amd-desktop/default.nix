@@ -51,8 +51,6 @@
 
   # --- Nix Build Optimalisatie ---
   nix.settings = {
-    # nix builds on tmpfs
-    build-dir = "/tmp";
     # use all 32 threads from 9950X
     max-jobs = "auto";
     cores = 32;
