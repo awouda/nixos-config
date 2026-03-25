@@ -40,7 +40,7 @@ in
     enable = true;
     font = {
       name = "Cantarell"; # std Sans font for GTK apps globally
-      size = 11;
+      size = 10;
     };
     theme = {
       name = "Adwaita-dark"; # 
@@ -79,6 +79,9 @@ in
     (myScript "finder")
     (myScript "clip-paster")
     (myScript "togglemouse")
+    (myScript "pull-project")
+    (myScript "push-project")
+    (myScript "sync-gradle-cache")
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
     # --- DevOps & CLI ---

@@ -77,8 +77,6 @@
     variant = "";
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -94,6 +92,17 @@
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
+  };
+
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.hplipWithPlugin ]; # Use hplipWithPlugin for full photo/scan support
+  };
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true; # Allows resolving .local addresses
+    openFirewall = true; # Opens the ports for mDNS discovery
   };
 
   # Install firefox.
@@ -128,6 +137,7 @@
     nwg-bar
     swaybg
     swayfx
+    docker-compose
 
     jetbrains.idea
     spotify

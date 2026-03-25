@@ -25,6 +25,7 @@
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   boot.kernelParams = [
+    "amdgpu.ppfeaturemask=0xfffd7fff"
     "amd_pstate=active"
     "lockdown=none"
   ];
@@ -41,12 +42,29 @@
     options nct6687 fan_config=msi_alt1
   '';
 
+
+  # --- Tmpfs (RAM-disk) ---
+  boot.tmp = {
+    useTmpfs = true;
+    tmpfsSize = "32G";
+  };
+
+  # --- Nix Build Optimalisatie ---
+  nix.settings = {
+    # nix builds on tmpfs
+    build-dir = "/tmp";
+    # use all 32 threads from 9950X
+    max-jobs = "auto";
+    cores = 32;
+    auto-optimise-store = true;
+  };
+
   programs.coolercontrol.enable = true;
 
   # LACT: for amd gpu overrides
   systemd.services.lactd = {
     description = "AMDGPU Control Daemon";
-    enable = false;
+    enable = true;
     serviceConfig = {
       ExecStart = "${pkgs.lact}/bin/lact daemon";
       Restart = "always";
@@ -57,7 +75,23 @@
   # DESKTOP ENVIRONMENTS (GNOME for Family, Sway for Alex)
   services.xserver.enable = true;
   services.desktopManager.gnome.enable = true;
-  programs.sway.enable = true;
+  programs.sway = {
+    enable = true;
+    extraSessionCommands = ''
+      eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+        export GNOME_KEYRING_CONTROL
+        export SSH_AUTH_SOCK
+    '';
+  };
+
+  # Enable the gnome-keyring service
+  services.gnome.gnome-keyring.enable = true;
+
+  # Unlock keyring on login
+  security.pam.services.login.enableGnomeKeyring = true;
+
+  # If you use greetd (highly likely on a NixOS/Sway setup), add this too:
+  security.pam.services.greetd.enableGnomeKeyring = true;
 
   # XDG Portals: Moved to system level for proper Sway/Gnome compatibility
   xdg.portal = {
