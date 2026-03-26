@@ -19,6 +19,7 @@
   networking.hostName = "wojo-amd-desktop";
   boot.kernelPackages = pkgs.linuxPackages_latest; # Crucial for 2026 hardware
   hardware.enableAllFirmware = true;
+  hardware.wirelessRegulatoryDatabase = true;
 
   # Ensure the GPU wakes up early during boot
   boot.initrd.kernelModules = [ "amdgpu" ];
@@ -28,12 +29,17 @@
     "amdgpu.ppfeaturemask=0xfffd7fff"
     "amd_pstate=active"
     "lockdown=none"
+    "iommu=pt"
+    "pcie_aspm=off"
+    "ath12k.pci_ps=0"
+    "transparent_hugepage=always"
   ];
 
   # MSI fans (Nuvoton)
   boot.kernelModules = [
     "nct6687"
     "i2c-dev"
+    "ath12k_pci"
   ];
 
   boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];

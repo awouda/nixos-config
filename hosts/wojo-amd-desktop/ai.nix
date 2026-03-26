@@ -32,9 +32,17 @@
     environmentVariables = {
       HSA_OVERRIDE_GFX_VERSION = "12.0.1";
       OLLAMA_DEBUG = "1";
-      OLLAMA_NUM_PARALLEL = "2";
       HIP_VISIBLE_DEVICES = "0";
-      OLLAMA_VRAM_OVERRIDE = "32212254720";
+
+      # The "Golden Ratio": 26 GiB in bytes
+      # This keeps 32B models in VRAM but saves 6GB for "Compute Buffers"
+      OLLAMA_VRAM_OVERRIDE = "27917287424";
+
+      # A solid context window for a 900-file repo map
+      OLLAMA_NUM_CTX = "16384";
+      OLLAMA_NUM_PARALLEL = "1";
+
+
       HSA_ENABLE_SDMA_COPY_WAVES = "0";
       ROCM_PATH = "${pkgs.rocmPackages.clr}";
     };

@@ -163,5 +163,12 @@ in
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    pandoc
+    pkgs.texlive.combined.scheme-small
+    maven
+    gradle
+
+
   ];
 }
