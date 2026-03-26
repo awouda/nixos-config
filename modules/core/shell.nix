@@ -180,12 +180,14 @@ in
       gcam = " git commit -am ";
       ggpush = " git push origin HEAD ";
       ggpull = " git pull origin HEAD ";
-      chrome = "google-chrome-stable --high-dpi-support=1 --force-device-scale-factor=0.8";
+      chrome = "google-chrome-stable --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations";
       open = "xdg-open";
       cat = "bat -p ";
       gfs = "git fuzzy status";
       gfl = "fshow";
       sp = " wl-paste > screenshot_$(date +%F_%T).png ";
+      vi = "nvim";
+      vim = "nvim";
 
       # FAST SWITCH: Use this for 90% of changes (shell, aliases, scripts)
       # It adds all files to git automatically so you don't hit the "file not found" error.

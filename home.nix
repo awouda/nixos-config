@@ -22,31 +22,34 @@ in
   home.sessionVariables = {
     XDG_DATA_DIRS = "$GSETTINGS_SCHEMAS_PATH:$XDG_DATA_DIRS:/home/alex/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
     _JAVA_AWT_WM_NONREPARENTING = "1";
-    WLR_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card0"; #remove when new GPU arrives
   };
 
-  # fonts configuration
-  fonts.fontconfig.enable = true;
-
-  fonts.fontconfig.defaultFonts = {
-    # This lets GNOME use standard readable fonts (Inter/Cantarell).
-    serif = [ "DejaVu Serif" ];
-    sansSerif = [ "DejaVu Sans" ];
-    monospace = [ "JetBrainsMono Nerd Font" ]; # Keep this for your terminal/coding
-  };
-
-  # Set the GTK theme and font
   gtk = {
     enable = true;
     font = {
-      name = "Cantarell"; # std Sans font for GTK apps globally
-      size = 10;
+      name = "Inter 11";
+      package = pkgs.inter;
     };
-    theme = {
-      name = "Adwaita-dark"; # 
-      package = pkgs.gnome-themes-extra;
+    gtk3.extraConfig = {
+      gtk-xft-antialias = 1;
+      gtk-xft-hinting = 1;
+      gtk-xft-hintstyle = "hintslight";
+      gtk-xft-rgba = "rgb";
     };
   };
+
+  # Set the GTK theme and font
+  #gtk = {
+  ##enable = true;
+  #font = {
+  #name = "Cantarell"; # std Sans font for GTK apps globally
+  #size = 10;
+  #};
+  #theme = {
+  #name = "Adwaita-dark"; # 
+  #package = pkgs.gnome-themes-extra;
+  #};
+  #};
 
   dconf.settings = {
     "org/gnome/desktop/input-sources" = {

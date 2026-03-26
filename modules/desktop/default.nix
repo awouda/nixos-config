@@ -24,7 +24,6 @@
     package = pkgs.google-chrome.override {
       commandLineArgs = [
         "--ozone-platform-hint=auto"
-        "--force-device-scale-factor=0.8"
       ];
     };
   };

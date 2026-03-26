@@ -75,13 +75,13 @@
       # Output (Display Scaling & Position)
       output = {
         "*" = {
-          scale = "2.0";
+          scale = "1.25";
           # pos = "0 0"; # only enable this when using eDP-1 as output
         };
         "HDMI-A-2" = {
           res = "3840x1600@29.998Hz";
           pos = "1280 0";
-          scale = "1";
+          scale = "1.25";
         };
       };
 

@@ -49,6 +49,12 @@
     DefaultTimeoutStopSec = "10s";
   };
 
+  environment.variables = {
+    _JAVA_AWT_WM_NONREPARENTING = "1";
+    NIXOS_OZONE_GTK_V3 = "1";
+    GDK_DPI_SCALE = "1";
+  };
+
   # additional configs for speeding up gtk apps 
   services.dbus.enable = true;
   services.gvfs.enable = true; # Mount, trash, and remote fs support
@@ -76,6 +82,25 @@
     layout = "us";
     variant = "";
   };
+
+  fonts.fontconfig = {
+    enable = true;
+    antialias = true;
+    hinting = {
+      enable = true;
+      style = "slight";
+    };
+    subpixel = {
+      rgba = "rgb";
+      lcdfilter = "default";
+    };
+    defaultFonts = {
+      serif = [ "DejaVu Serif" ];
+      sansSerif = [ "Inter" "DejaVu Sans" ];
+      monospace = [ "JetBrainsMono Nerd Font" ];
+    };
+  };
+
 
 
   # Enable sound with pipewire.
@@ -157,6 +182,8 @@
     radeontop
     cpufetch
     dmidecode
+    wf-recorder
+    slurp
 
   ];
 

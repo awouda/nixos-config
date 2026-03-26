@@ -18,6 +18,8 @@
     HSA_OVERRIDE_GFX_VERSION = "12.0.1";
     HSA_ENABLE_SDMA_COPY_WAVES = "0";
     ROCM_PATH = "${pkgs.rocmPackages.clr}";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
   };
 
   # 4. OLLAMA SERVICE
