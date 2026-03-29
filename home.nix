@@ -87,6 +87,7 @@ in
     (myScript "sync-gradle-cache")
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
+    nerd-fonts.ubuntu-mono
     # --- DevOps & CLI ---
     home-manager
     git

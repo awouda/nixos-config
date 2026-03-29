@@ -37,7 +37,7 @@
           style = "Regular";
         };
       };
-      font.size = 11;
+      font.size = 14;
       selection.save_to_clipboard = true;
       window.opacity = 0.95;
     };

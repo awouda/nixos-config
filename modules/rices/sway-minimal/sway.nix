@@ -101,7 +101,7 @@
         "LG Electronics LG ULTRAWIDE 208NTYT5M530" = {
           res = "3840x1600@59.994Hz";
           pos = "0 0";
-          scale = "1.25";
+          scale = "1.0";
         };
       };
 

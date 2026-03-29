@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       main = {
-        font = "JetBrainsMono Nerd Font:size=12";
+        font = "JetBrainsMono Nerd Font:size=13";
         terminal = "${pkgs.alacritty}/bin/alacritty";
         prompt = "'❯ '";
         width = 40;

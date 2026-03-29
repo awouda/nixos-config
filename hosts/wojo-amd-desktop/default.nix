@@ -31,7 +31,7 @@
     "lockdown=none"
     "iommu=pt"
     "pcie_aspm=off"
-    "ath12k.pci_ps=0"
+    "ath12k.pcie_ps=0"
     "transparent_hugepage=always"
   ];
 
@@ -54,6 +54,7 @@
     useTmpfs = true;
     tmpfsSize = "32G";
   };
+
 
   # --- Nix Build Optimalisatie ---
   nix.settings = {
