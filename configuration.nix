@@ -185,6 +185,15 @@
     wf-recorder
     slurp
 
+    # for thumbnails on mts vids
+    shared-mime-info
+    pkgs.xfce.tumbler
+    ffmpegthumbnailer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gst-libav
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

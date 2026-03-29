@@ -169,30 +169,34 @@
     extraConfig =
       # language=bash
       ''
-        # Disable laptop screen when lid is closed
-        bindswitch lid:on output eDP-1 disable
-        # Re-enable laptop screen when lid is opened
-        bindswitch lid:off output eDP-1 enable
+        exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK;
+        exec gnome-keyring-daemon --start --components=pkcs11,secrets,ssh;
+        exec ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
 
-        exec swaymsg workspace number 1
+         # Disable laptop screen when lid is closed
+         bindswitch lid:on output eDP-1 disable
+         # Re-enable laptop screen when lid is opened
+         bindswitch lid:off output eDP-1 enable
 
-        # Corners and Shadows
-        corner_radius 12
-        shadows enable
-        shadows_on_csd enable
+         exec swaymsg workspace number 1
 
-        # Blur Logic
-        blur enable
-        blur_passes 3
-        blur_radius 4
+         # Corners and Shadows
+         corner_radius 12
+         shadows enable
+         shadows_on_csd enable
 
-        # Apply effects to UI layers
-        layer_effects "waybar" blur enable, blur_ignore_transparent enable;
-        layer_effects "rofi" blur enable; shadows enable; corner_radius 12
+         # Blur Logic
+         blur enable
+         blur_passes 3
+         blur_radius 4
 
-        # Essential for making GTK apps snappy and functional on Wayland
-        exec dbus-update-activation-environment --all
-        exec systemctl --user import-environment PATH JAVA_HOME
+         # Apply effects to UI layers
+         layer_effects "waybar" blur enable, blur_ignore_transparent enable;
+         layer_effects "rofi" blur enable; shadows enable; corner_radius 12
+
+         # Essential for making GTK apps snappy and functional on Wayland
+         exec dbus-update-activation-environment --all
+         exec systemctl --user import-environment PATH JAVA_HOME
       '';
   };
 }

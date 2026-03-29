@@ -22,7 +22,7 @@
   hardware.wirelessRegulatoryDatabase = true;
 
   # Ensure the GPU wakes up early during boot
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.initrd.kernelModules = [ "amdgpu" "ath12k" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   boot.kernelParams = [
@@ -170,6 +170,7 @@
     amdgpu_top
     coolercontrol.coolercontrol-gui
     lact
+    pkgs.polkit_gnome
   ];
 
   # 7. HARDWARE SUPPORT
