@@ -84,8 +84,9 @@
     enable = true;
     extraSessionCommands = ''
       eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-        export GNOME_KEYRING_CONTROL
-        export SSH_AUTH_SOCK
+      export GNOME_KEYRING_CONTROL
+      export SSH_AUTH_SOCK
+      export YDOTOOL_SOCKET="/run/ydotoold/socket"
     '';
   };
 
@@ -119,7 +120,7 @@
       alex = {
         isNormalUser = true;
         description = "alex";
-        extraGroups = [ "wheel" "networkmanager" "docker" "video" "render" "photos" ];
+        extraGroups = [ "wheel" "networkmanager" "docker" "video" "render" "photos" "uinput" "ydotool" ];
       };
       nout = kidConfig;
       emmeline = kidConfig;
