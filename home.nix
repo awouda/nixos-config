@@ -21,7 +21,14 @@ in
   home.stateVersion = "25.11";
   home.sessionVariables = {
     XDG_DATA_DIRS = "$GSETTINGS_SCHEMAS_PATH:$XDG_DATA_DIRS:/home/alex/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
-    _JAVA_AWT_WM_NONREPARENTING = "1";
+    # Tells Java not to wait for the Window Manager to "reparent" it (Fixes grey screens/flicker)
+    "_JAVA_AWT_WM_NONREPARENTING" = "1";
+
+    # Forces IDEA to use the Wayland backend (available in 2024.x+ versions)
+    "NIXOS_OZONE_PKGS_WAYLAND" = "1";
+
+    # Potential fix for JetBrains-specific rendering glitches
+    "STUDIO_JDK" = "${pkgs.jetbrains.jdk}";
   };
 
   gtk = {

@@ -152,6 +152,10 @@
           criteria = { app_id = "clipse"; };
           command = "floating enable, resize set 800 600, move position center";
         }
+        {
+          command = "floating enable, border pixel 2, sticky enable, move position center, resize set 1200 800";
+          criteria = { class = "floating_finder"; };
+        }
       ];
 
       # Status Bar

@@ -133,11 +133,6 @@
   # Install firefox.
   programs.firefox.enable = true;
 
-
-  # for better pasting experience (??)
-  programs.ydotool.enable = true;
-  # "$mod+V" = "exec cliphist list | wofi --dmenu | cliphist decode | ydotool type --file -"; // check sway config
-
   # Nix Store Management
   nix = {
     settings.auto-optimise-store = true; # Deduplicates files on every build
@@ -184,6 +179,10 @@
     dmidecode
     wf-recorder
     slurp
+
+    vlc
+    mpv
+    totem
 
     # for thumbnails on mts vids
     shared-mime-info

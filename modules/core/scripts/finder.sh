@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
-# --hidden: find .dotfiles
-# --no-ignore: find files even if they are in .gitignore (important for nix-config!)
-file=$(fd . "$HOME" --hidden --no-ignore --exclude .git | fuzzel -d -p "Find: ")
+# fd finds files, awk prepends the name: "filename.jpg  |  /home/user/photos/filename.jpg"
+selection=$(fd . "$HOME" --hidden --no-ignore --exclude .git --type f | \
+    awk -F/ '{print $NF "  |  " $0}' | \
+    fuzzel -d -p "Find: " --width 100)
+
+[[ -z "$selection" ]] && exit
+
+# Extract path from everything after the separator
+file=$(echo "$selection" | sed 's/.* |  //')
 
 if [ -n "$file" ]; then
-    # Check if the file is a text file using the 'file' command
     if file --mime-type "$file" | grep -q "text/"; then
-        # Open in your terminal with nvim
-        alacritty -e nvim "$file"
+        # Matches the 'floating_finder' rule in your Sway config
+        alacritty --class "floating_finder" -e nvim "$file"
     else
-        # Use xdg-open for PDFs, images, etc.
         xdg-open "$file"
     fi
 fi
+

@@ -142,6 +142,9 @@ in
       # Set the silence variable immediately
       export DIRENV_LOG_FORMAT=""
 
+      # supress Aider base warning
+      export OLLAMA_API_BASE=http://127.0.0.1:11434
+
       # Cat and copy to Wayland clipboard
       ccat() {
         cat "$@" | wl-copy
@@ -188,6 +191,16 @@ in
       sp = " wl-paste > screenshot_$(date +%F_%T).png ";
       vi = "nvim";
       vim = "nvim";
+      # Aider Aliases (No Git/Auto-Commit)
+      "aider-qwen" = "aider --model ollama/qwen2.5-coder:32b --no-git";
+      "aider-llama" = "aider --model ollama/llama3-layered --no-git";
+      "aider-ds" = "aider --model ollama/ds70-hybrid --no-git";
+      "aider-ds-lite" = "aider --model ollama/deepseek-coder-v2:16b --no-git";
+
+      # Ollama Quick-Run Aliases
+      "o-r1" = "ollama run ds70-hybrid";
+      "o-q32" = "ollama run qwen2.5-coder:32b";
+      "o-l70" = "ollama run llama3-layered";
 
       # FAST SWITCH: Use this for 90% of changes (shell, aliases, scripts)
       # It adds all files to git automatically so you don't hit the "file not found" error.
