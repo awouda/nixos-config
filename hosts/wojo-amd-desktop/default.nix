@@ -22,7 +22,7 @@
   hardware.wirelessRegulatoryDatabase = true;
 
   # Ensure the GPU wakes up early during boot
-  boot.initrd.kernelModules = [ "amdgpu" "ath12k" ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   boot.kernelParams = [
@@ -31,7 +31,6 @@
     "lockdown=none"
     "iommu=pt"
     "pcie_aspm=off"
-    "ath12k.pcie_ps=0"
     "transparent_hugepage=always"
   ];
 
@@ -48,13 +47,11 @@
     options nct6687 fan_config=msi_alt1
   '';
 
-
   # --- Tmpfs (RAM-disk) ---
   boot.tmp = {
     useTmpfs = true;
     tmpfsSize = "32G";
   };
-
 
   # --- Nix Build Optimalisatie ---
   nix.settings = {
