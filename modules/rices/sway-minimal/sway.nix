@@ -138,8 +138,10 @@
         "${modifier}+Shift+Backspace" = "exec swaymsg \"output * dpms on\"";
         "${modifier}+Shift+m" = "exec togglemouse";
         "${modifier}+Mod1+r" = "exec pkill -SIGINT wf-recorder || wf-recorder -g \"$(slurp)\" -f $HOME/Videos/recording_$(date +%Y-%m-%d_%H-%M-%S).mkv --codec h264_vaapi -d /dev/dri/renderD128";
-      };
+        # Universal Paste (Alt+P) using Shift+Insert simulation
+        "${modifier}+p" = "exec wtype -M ctrl -M shift v -m shift -m ctrl";
 
+      };
 
       # --- Verify your Window Commands ---
       window.commands = [
