@@ -128,6 +128,11 @@
     enable = true;
     nssmdns4 = true; # Allows resolving .local addresses
     openFirewall = true; # Opens the ports for mDNS discovery
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true; # Makes it show up in Finder/Network
+    };
   };
 
   # Install firefox.

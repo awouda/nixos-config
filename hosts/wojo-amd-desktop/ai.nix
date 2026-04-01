@@ -31,7 +31,13 @@
     user = "ollama";
     group = "ollama";
 
+    # for enabling external access
+    host = "0.0.0.0";
+    openFirewall = true;
+
     environmentVariables = {
+      # for enabling external access
+      OLLAMA_ORIGINS = "*";
       HSA_OVERRIDE_GFX_VERSION = "12.0.1";
       OLLAMA_DEBUG = "1";
       HIP_VISIBLE_DEVICES = "0";
