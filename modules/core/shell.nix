@@ -204,10 +204,10 @@ in
 
       # FAST SWITCH: Use this for 90% of changes (shell, aliases, scripts)
       # It adds all files to git automatically so you don't hit the "file not found" error.
-      nrs = "git add . && sudo nixos-rebuild switch --flake .";
+      nrs = "git add . && sudo nixos-rebuild switch --impure --flake .#wojo-amd-desktop --no-update-lock-file";
 
       # SYSTEM UPDATE: Use this when you want a new kernel or newer package versions.
-      nru = "nix flake update && git add . && sudo nixos-rebuild switch --flake .";
+      nru = "nix flake update && git add . && sudo nixos-rebuild switch --impure --flake .#wojo-amd-desktop --no-update-lock-file";
 
       # TEST SWITCH: Just like nrs, but doesn't add a boot entry (good for testing rices).
       nrt = "git add . && sudo nixos-rebuild test --flake .";

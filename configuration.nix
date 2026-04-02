@@ -148,6 +148,8 @@
     };
   };
 
+  # We use /. + to force Nix to recognize this as an absolute path in a Flake
+  security.pki.certificateFiles = [ (/. + /etc/nixos/certs/comp.crt) ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -158,6 +160,7 @@
     pciutils
     usbutils
     dnsutils
+    openssl
     bluez
     nwg-bar
     swaybg
