@@ -139,6 +139,9 @@
 
   services.openssh.enable = true;
 
+  # We use /. + to force Nix to recognize this as an absolute path in a Flake
+  security.pki.certificateFiles = [ "/etc/nixos/certs/comp.crt" ];
+
   # SYSTEM TOOLS & NIX-LD
   # Nix-LD allows you to run unpatched binaries (VS Code, AI tools, etc.)
   programs.nix-ld.enable = true;
