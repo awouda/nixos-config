@@ -12,7 +12,7 @@
   imports = [
     ../../configuration.nix # Global settings (Locales, Timezone, Pipewire)
     ./hardware-configuration.nix # Generated hardware file
-    ./ai.nix # The ROCm 7.x / Ollama stack we built
+    #./ai.nix # The ROCm 7.x / Ollama stack we built #we disabled as we removed the noise R9700 GPU
   ];
 
   # NETWORKING & KERNEL (Ryzen 9000 & Wi-Fi 7 Readiness)
@@ -140,7 +140,7 @@
   services.openssh.enable = true;
 
   # We use /. + to force Nix to recognize this as an absolute path in a Flake
-  security.pki.certificateFiles = [ "/etc/nixos/certs/comp.crt" ];
+  security.pki.certificateFiles = [ /etc/nixos/certs/comp.crt ];
 
   # SYSTEM TOOLS & NIX-LD
   # Nix-LD allows you to run unpatched binaries (VS Code, AI tools, etc.)

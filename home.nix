@@ -72,8 +72,8 @@ in
 
   programs.git = {
     enable = true;
-    userName = "Alex Wouda";
-    userEmail = "alex.boxcar902@passinbox.com";
+    settings.user.name = "Alex Wouda";
+    settings.user.email = "alex.boxcar902@passinbox.com";
   };
 
   services.cliphist = {
