@@ -81,6 +81,7 @@ in
     allowImages = true;
   };
 
+  fonts.fontconfig.enable = true;
   # ONLY CLI, DevOps Tools, and Fonts remain here!
   home.packages = with pkgs; [
     (myScript "fshow")
