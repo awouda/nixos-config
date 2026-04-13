@@ -13,9 +13,12 @@
       "image/png" = [ "imv.desktop" ];
       "image/jpeg" = [ "imv.desktop" ];
       "application/pdf" = [ "org.pwmt.zathura.desktop" ]; # Or "evince.desktop"
-      "text/html" = "google-chrome.desktop";
-      "x-scheme-handler/http" = "google-chrome.desktop";
-      "x-scheme-handler/https" = "google-chrome.desktop";
+      "text/html" = "firefox.desktop";
+      "text/xml" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = [ "firefox.desktop" ];
+      "x-scheme-handler/unknown" = [ "firefox.desktop" ];
     };
   };
 

@@ -170,7 +170,12 @@
     coolercontrol.coolercontrol-gui
     lact
     pkgs.polkit_gnome
+    ollama
+    aider-chat
   ];
+
+  services.tailscale.enable = true;
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
 
   # 7. HARDWARE SUPPORT
   hardware.bluetooth.enable = true;
