@@ -125,69 +125,65 @@ in
   programs.bash = {
     enable = true;
     initExtra = ''
-       # Initialize ble.sh early (Syntax highlighting and autocompletion)
-       [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh --noattach
+      # Initialize ble.sh early (Syntax highlighting and autocompletion)
+      [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh --noattach
 
-       if [ -f ~/.bash_secrets ]; then
-       . ~/.bash_secrets
-       fi
+      if [ -f ~/.bash_secrets ]; then
+      . ~/.bash_secrets
+      fi
 
-       bleopt term_true_colors=1 
+      bleopt term_true_colors=1 
 
-       export COLORTERM=truecolor
-       export TERM=xterm-256color
+      export COLORTERM=truecolor
+      export TERM=xterm-256color
 
-       eval "$(starship init bash)"
+      eval "$(starship init bash)"
 
-       # Set the silence variable immediately
-       export DIRENV_LOG_FORMAT=""
+      # Set the silence variable immediately
+      export DIRENV_LOG_FORMAT=""
 
-       # supress Aider base warning
-       export OLLAMA_API_BASE=http://127.0.0.1:11434
+      # supress Aider base warning
+      export OLLAMA_API_BASE=http://127.0.0.1:11434
 
-       # Cat and copy to Wayland clipboard
-       ccat() {
-         cat "$@" | wl-copy
-         echo "Copied to clipboard!"
-       }
-
-       # Enable company (ZScaler) proxy
-      proxyme() {
-          export http_proxy="http://127.0.0.1:9000"
-          export https_proxy="http://127.0.0.1:9000"
-          export all_proxy="http://127.0.0.1:9000"
-          echo "Proxy Enabled (Port 9000)"
-      }
-     
-      # Disable Proxy
-      unproxyme() {
-          unset http_proxy https_proxy all_proxy
-          echo "Proxy Disabled"
+      # Cat and copy to Wayland clipboard
+      ccat() {
+        cat "$@" | wl-copy
+        echo "Copied to clipboard!"
       }
 
-       if [ -d /etc/nixos/.git ]; then
-         CHANGES=$(git -C /etc/nixos status --porcelain)
-           if [ -n "$CHANGES" ]; then
-             echo -e "\e[33m󱈚 Ops Alert: Uncommitted changes in /etc/nixos\e[0m"
-           fi
-       fi
+      work-on() {
+       ssh -D 1080 -o ServerAliveInterval=60 -N -f a4069172@192.168.50.98
+       echo "Tunnel to MacBook active on port 1080. Stealth mode enabled."
+      }
 
-       if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
-        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-       fi
+      work-off() {
+       pkill -f "ssh -D 1080"
+       echo "Tunnel closed."
+      }
 
-       # this must be before ble activation
-       eval "$(zoxide init bash)"
+      if [ -d /etc/nixos/.git ]; then
+        CHANGES=$(git -C /etc/nixos status --porcelain)
+          if [ -n "$CHANGES" ]; then
+            echo -e "\e[33m󱈚 Ops Alert: Uncommitted changes in /etc/nixos\e[0m"
+          fi
+      fi
+
+      if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      fi
+
+      # this must be before ble activation
+      eval "$(zoxide init bash)"
 
 
-       # In je initExtra, voor ble-attach:
-       if [[ $- == *i* ]]; then
-         ble-face syntax_error='fg=red,underline'
-         ble-face auto_complete='fg=242'
-       fi
+      # In je initExtra, voor ble-attach:
+      if [[ $- == *i* ]]; then
+        ble-face syntax_error='fg=red,underline'
+        ble-face auto_complete='fg=242'
+      fi
 
-       # ACTIVATE Ble.sh
-       [[ $- == *i* ]] && ble-attach
+      # ACTIVATE Ble.sh
+      [[ $- == *i* ]] && ble-attach
     '';
     shellAliases = {
       nconf = " vi /etc/nixos/configuration.nix ";
