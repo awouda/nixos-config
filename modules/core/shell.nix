@@ -201,7 +201,7 @@ in
       sp = " wl-paste > screenshot_$(date +%F_%T).png ";
       vi = "nvim";
       vim = "nvim";
-      k-home = "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml && echo 'k3s (home) context set'";
+      k-home = "mkdir -p ~/.kube && sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/k3s-config && sudo chown $USER ~/.kube/k3s-config && export KUBECONFIG=~/.kube/k3s-config && echo 'k3s home context enabled (writable)'";
       k-work = "export KUBECONFIG=$HOME/.kube/config && echo 'work (aks) context set'";
       k = "kubectl ";
 
