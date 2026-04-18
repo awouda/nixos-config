@@ -17,6 +17,12 @@
 
   # NETWORKING & KERNEL (Ryzen 9000 & Wi-Fi 7 Readiness)
   networking.hostName = "wojo-amd-desktop";
+
+  # firewall configs.
+  # 6443, 8472 are for k3s
+  networking.firewall.allowedTCPPorts = [ 6443 ];
+  networking.firewall.allowedUDPPorts = [ 8472 ];
+
   boot.kernelPackages = pkgs.linuxPackages_latest; # Crucial for 2026 hardware
   hardware.enableAllFirmware = true;
   hardware.wirelessRegulatoryDatabase = true;
@@ -41,7 +47,9 @@
     "ath12k_pci"
   ];
 
-  boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.nct6687d
+  ];
 
   boot.extraModprobeConfig = ''
     options nct6687 fan_config=msi_alt1
@@ -128,6 +136,7 @@
   # Shared photos directory with group write permissions
   systemd.tmpfiles.rules = [
     "d /srv/photos 2775 root photos - -"
+    "z /etc/rancher/k3s/k3s.yaml 0644 root root - -"
   ];
 
   services.fstrim.enable = true; # SSD health
@@ -139,8 +148,16 @@
 
   services.openssh.enable = true;
 
-  # We use /. + to force Nix to recognize this as an absolute path in a Flake
-  security.pki.certificateFiles = [ /etc/nixos/certs/comp.crt ];
+  # to use nixos through a VPN with it the associated certificate
+  #security.pki.certificateFiles = [ /etc/nixos/certs/comp.crt ];
+
+  # --- Kubernetes (k3s) ---
+  services.k3s = {
+    enable = true;
+    role = "server";
+    # Lightweight setup for your homelab experiments
+    extraFlags = "--disable traefik --flannel-backend=host-gw";
+  };
 
   # SYSTEM TOOLS & NIX-LD
   # Nix-LD allows you to run unpatched binaries (VS Code, AI tools, etc.)
@@ -155,6 +172,21 @@
     curl
     expat
   ];
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+  };
+
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs # Wayland screen capture (Sway)
+      obs-vaapi # Hardware encoding for your AMD GPU
+      obs-vkcapture # Vulkan game capture
+      obs-pipewire-audio-capture
+    ];
+  };
 
   environment.systemPackages = with pkgs; [
     swaynotificationcenter # For your Tokyo Midnight Sway theme

@@ -201,6 +201,10 @@ in
       sp = " wl-paste > screenshot_$(date +%F_%T).png ";
       vi = "nvim";
       vim = "nvim";
+      k-home = "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml && echo 'k3s (home) context set'";
+      k-work = "export KUBECONFIG=$HOME/.kube/config && echo 'work (aks) context set'";
+      k = "kubectl ";
+
       # Aider Aliases (No Git/Auto-Commit)
       "aider-qwen" = "aider --model ollama/qwen2.5-coder:32b --no-git";
       "aider-llama" = "aider --model ollama/llama3-layered --no-git";
@@ -214,15 +218,14 @@ in
 
       # FAST SWITCH: Use this for 90% of changes (shell, aliases, scripts)
       # It adds all files to git automatically so you don't hit the "file not found" error.
-      nrs = "git add . && sudo nixos-rebuild switch --impure --flake .#wojo-amd-desktop --no-update-lock-file";
+      #nrs = "git add . && sudo nixos-rebuild switch --impure --flake .#wojo-amd-desktop --no-update-lock-file";
+      nrs = "git add . && sudo nixos-rebuild switch --flake .#wojo-amd-desktop ";
 
       # SYSTEM UPDATE: Use this when you want a new kernel or newer package versions.
       nru = "nix flake update && git add . && sudo nixos-rebuild switch --impure --flake .#wojo-amd-desktop --no-update-lock-file";
 
       # TEST SWITCH: Just like nrs, but doesn't add a boot entry (good for testing rices).
       nrt = "git add . && sudo nixos-rebuild test --flake .";
-
-      cgradle = "./gradlew -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=9000 -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=9000";
     };
   };
 }

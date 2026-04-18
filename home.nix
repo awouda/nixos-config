@@ -112,6 +112,7 @@ in
     kubectl
     kubectx
     kubelogin
+    kubernetes-helm
     bat
     silver-searcher
     zoxide
