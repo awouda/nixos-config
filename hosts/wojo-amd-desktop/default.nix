@@ -69,7 +69,7 @@
     auto-optimise-store = true;
   };
 
-  programs.coolercontrol.enable = true;
+  programs.coolercontrol.enable = false;
 
   # LACT: for amd gpu overrides
   systemd.services.lactd = {
@@ -199,7 +199,7 @@
     rocmPackages.rocm-smi
     rocmPackages.rocminfo
     amdgpu_top
-    coolercontrol.coolercontrol-gui
+    #coolercontrol.coolercontrol-gui
     lact
     pkgs.polkit_gnome
     ollama

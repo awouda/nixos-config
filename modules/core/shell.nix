@@ -152,7 +152,7 @@ in
       }
 
       work-on() {
-       ssh -D 1080 -o ServerAliveInterval=60 -N -f a4069172@192.168.50.98
+       ssh -D 1080 -o ServerAliveInterval=60 -N -f a4069172@192.168.50.162
        echo "Tunnel to MacBook active on port 1080. Stealth mode enabled."
       }
 
@@ -204,6 +204,7 @@ in
       k-home = "mkdir -p ~/.kube && sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/k3s-config && sudo chown $USER ~/.kube/k3s-config && export KUBECONFIG=~/.kube/k3s-config && echo 'k3s home context enabled (writable)'";
       k-work = "export KUBECONFIG=$HOME/.kube/config && echo 'work (aks) context set'";
       k = "kubectl ";
+      fans = "watch -n 1 'sensors | grep -E \"Tdie|Fan\"'";
 
       # Aider Aliases (No Git/Auto-Commit)
       "aider-qwen" = "aider --model ollama/qwen2.5-coder:32b --no-git";
@@ -229,3 +230,5 @@ in
     };
   };
 }
+
+
