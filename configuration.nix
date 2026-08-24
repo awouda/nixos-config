@@ -8,7 +8,10 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # This enables the docker daemon and the docker-compose CLI plugin
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    package = pkgs.docker_29; # Force NixOS to use Docker 29
+  };
 
 
   # Bootloader.
